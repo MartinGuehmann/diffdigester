@@ -596,3 +596,59 @@ function myFunction() {
 	document.getElementById("nocutinseq2Label").innerHTML = nocutinseq2Label + " (" + seq2NoCutNum + " of " + allSeqsNum + " selected enzymes):";
 	document.getElementById("nocutinseq3Label").innerHTML = nocutinseq3Label + " (" + seq3NoCutNum + " of " + allSeqsNum + " selected enzymes):";
 }
+
+
+// Assuming enzymeList is an array of enzyme names
+// and generateFragments is a function that takes enzyme and plasmid sequence and returns fragment lengths
+
+
+
+function findDifferentiatingEnzyme(enzymeList, plasmid1, plasmid2) {
+	let differentiatingEnzymes = [];
+
+	enzymeList.forEach(enzyme => {
+		let fragments1 = generateFragments(enzyme, plasmid1);
+		let fragments2 = generateFragments(enzyme, plasmid2);
+
+		if (isDifferentiable(fragments1, fragments2)) {
+			differentiatingEnzymes.push(enzyme);
+		}
+	});
+
+	return differentiatingEnzymes;
+}
+
+
+
+
+
+
+function isDifferentiable(fragments1, fragments2) {
+	// Check for clear differences, e.g., number of fragments or unique fragment sizes
+	if (fragments1.length !== fragments2.length) return true;
+	for (let i = 0; i < fragments1.length; i++) {
+		if (Math.abs(fragments1[i]/fragments2[i]) > 1.2) { // 20% difference , Customize this threshold
+			return true;
+		}
+	}
+	return false;
+}
+
+
+
+// Example function that generates fragments
+function generateFragments(enzyme, plasmidSequence) {
+	// Add logic to return an array of fragment sizes based on enzyme cuts
+	return [];
+}
+
+
+// Usage
+let enzymeList = ["EcoRI", "BamHI", "HindIII"];
+let plasmid1 = "plasmid_sequence_1";
+let plasmid2 = "plasmid_sequence_2";
+
+
+//sample output to console
+let differentiatingEnzymes = findDifferentiatingEnzyme(enzymeList, plasmid1, plasmid2);
+console.log("Enzymes that can differentiate the plasmids:", differentiatingEnzymes);
