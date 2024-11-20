@@ -30,6 +30,18 @@ for (i = 0; i < enzymeentry.length; i++)
 		enzyme.regexfw[0] = makeregex(reverseComplement);
 		enzyme.regexrv[0] = makeregex(cleanRecognition);
 
+		enzyme.cutPosFw = [];
+		enzyme.cutPosRv = [];
+
+		enzyme.cutPosFw[0] = enzyme.recognition[0].indexOf("\'");
+		enzyme.cutPosRv[0] = enzyme.recognition[0].indexOf("_");
+		if(enzyme.cutPosRv[0] == -1)
+			enzyme.cutPosRv[0] = enzyme.cutPosFw[0];
+		else if(enzyme.cutPosFw[0] < enzyme.cutPosRv[0])
+			enzyme.cutPosRv[0]--;
+		else if(enzyme.cutPosFw[0] > enzyme.cutPosRv[0])
+			enzyme.cutPosFw[0]--;
+
 		enzymeArray.push(enzyme);
 	}
 	else
@@ -42,6 +54,15 @@ for (i = 0; i < enzymeentry.length; i++)
 
 		enzyme.regexfw[newIndex] = makeregex(reverseComplement);
 		enzyme.regexrv[newIndex] = makeregex(cleanRecognition);
+
+		enzyme.cutPosFw[newIndex] = enzyme.recognition[newIndex].indexOf("\'");
+		enzyme.cutPosRv[newIndex] = enzyme.recognition[newIndex].indexOf("_");
+		if(enzyme.cutPosRv[newIndex] == -1)
+			enzyme.cutPosRv[newIndex] = enzyme.cutPosFw[newIndex];
+		else if(enzyme.cutPosFw[newIndex] < enzyme.cutPosRv[newIndex])
+			enzyme.cutPosRv[newIndex]--;
+		else if(enzyme.cutPosFw[newIndex] > enzyme.cutPosRv[newIndex])
+			enzyme.cutPosFw[newIndex]--;
 	}
 }
 
@@ -512,6 +533,9 @@ function myFunction() {
 	seq2=getSequence("2");
 	seq3=getSequence("3");
 
+	let differentiatingEnzymes = findDifferentiatingEnzyme(seq1, seq2);
+	console.log("Enzymes that can differentiate the plasmids:", differentiatingEnzymes);
+
 	var enzymesToUse = document.getElementById("EnzymesToUse");
 
 	for (var i = 0; i < enzymeArray.length; i++)
@@ -603,25 +627,28 @@ function myFunction() {
 
 
 
-function findDifferentiatingEnzyme(enzymeList, plasmid1, plasmid2) {
+function findDifferentiatingEnzyme(plasmid1, plasmid2) {
+	var enzymesToUse = document.getElementById("EnzymesToUse");
+
 	let differentiatingEnzymes = [];
 
-	enzymeList.forEach(enzyme => {
-		let fragments1 = generateFragments(enzyme, plasmid1);
-		let fragments2 = generateFragments(enzyme, plasmid2);
+	for (var i = 0; i < enzymeArray.length; i++)
+	{
+		if(enzymesToUse.namedItem(enzymeArray[i].name) == null)
+		{
+			continue;
+		}
+
+		let fragments1 = generateFragments(enzymeArray[i], plasmid1);
+		let fragments2 = generateFragments(enzymeArray[i], plasmid2);
 
 		if (isDifferentiable(fragments1, fragments2)) {
-			differentiatingEnzymes.push(enzyme);
+			differentiatingEnzymes.push(enzymeArray[i]);
 		}
-	});
+	};
 
 	return differentiatingEnzymes;
 }
-
-
-
-
-
 
 function isDifferentiable(fragments1, fragments2) {
 	// Check for clear differences, e.g., number of fragments or unique fragment sizes
@@ -634,21 +661,33 @@ function isDifferentiable(fragments1, fragments2) {
 	return false;
 }
 
-
-
 // Example function that generates fragments
 function generateFragments(enzyme, plasmidSequence) {
-	// Add logic to return an array of fragment sizes based on enzyme cuts
-	return [];
+
+	let matchIndices = [];
+
+	for (let i = 0; i < enzyme.regexfw.length; i++)
+	{
+		let matchIndicesFor = Array.from(plasmidSequence.matchAll(enzyme.regexfw[i])).map(x => x.index + enzyme.cutPosFw[i]);
+		let matchIndicesRev = Array.from(plasmidSequence.matchAll(enzyme.regexrv[i])).map(x => x.index + enzyme.cutPosRv[i]);
+
+		matchIndices = matchIndices.concat(matchIndicesFor);
+		matchIndices = matchIndices.concat(matchIndicesRev);
+	}
+
+	matchIndices.sort(function(a, b){return a-b});
+	matchIndices = [...new Set(matchIndices)];
+
+	let fragments = []
+	for (let i = 0; i < matchIndices.length-1; i++) {
+		let start = matchIndices[i];
+		let end   = matchIndices[i+1];
+		fragments.push(plasmidSequence.slice(start, end));
+	}
+
+	// @ToDo: Do circular matching and end pieces
+	let start = matchIndices[matchIndices.length-1];
+	fragments.push(plasmidSequence.slice(start));
+
+	return fragments;
 }
-
-
-// Usage
-let enzymeList = ["EcoRI", "BamHI", "HindIII"];
-let plasmid1 = "plasmid_sequence_1";
-let plasmid2 = "plasmid_sequence_2";
-
-
-//sample output to console
-let differentiatingEnzymes = findDifferentiatingEnzyme(enzymeList, plasmid1, plasmid2);
-console.log("Enzymes that can differentiate the plasmids:", differentiatingEnzymes);
