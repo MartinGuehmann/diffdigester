@@ -642,6 +642,27 @@ function findDifferentiatingEnzyme(plasmid1, plasmid2) {
 		let fragments1 = generateFragments(enzymeArray[i], plasmid1);
 		let fragments2 = generateFragments(enzymeArray[i], plasmid2);
 
+		let output1 = ">\n"
+		output1 += fragments1[0];
+		for(let i = 1; i < fragments1.length; ++i)
+		{
+			output1 += "\n>\n";
+			output1 += fragments1[i];
+		}
+		document.getElementById("frag1").value = output1;
+
+		let output2 = ">\n"
+		output2 += fragments2[0];
+		for(let i = 1; i < fragments2.length; ++i)
+		{
+			output2 += "\n>\n";
+			output2 += fragments2[i];
+		}
+		document.getElementById("frag2").value = output2;
+
+		console.log("Fragments1:", fragments1);
+		console.log("Fragments2:", fragments2);
+
 		if (isDifferentiable(fragments1, fragments2)) {
 			differentiatingEnzymes.push(enzymeArray[i]);
 		}
