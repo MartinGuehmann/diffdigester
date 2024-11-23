@@ -425,6 +425,9 @@ function clearresults(){
 
 	document.getElementById("fileWarning").innerHTML = "";
 
+	document.getElementById("frag1").value = "";
+	document.getElementById("frag2").value = "";
+
 	resetListLabels();
 }
 
