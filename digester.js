@@ -428,6 +428,14 @@ function clearresults(){
 	resetListLabels();
 }
 
+function getFastaID(seq){
+	if(seq.startsWith(">"))
+		// Gives an array of strings, even so this way it only contains one element
+		return seq.match(/^>.*\n/)[0];
+	else
+		return "";
+}
+
 function remvoveFastaID(seq){
 	seqout=seq.replace(/^>.*\n/, '');
 	//console.log(seqout);
@@ -456,6 +464,10 @@ function getSequence(seqID){
 	var commenttext = document.getElementById("commenton").innerHTML;
 	// Get the value of the input field
 	var seq=document.getElementById("seq" + seqID).value;
+
+	var seqObject = new Object();
+	seqObject.id = getFastaID(seq);
+
 	seq = remvoveFastaID(seq);
 	seqF = remvoveFurtherFastaSeqs(seq);
 	var fRemoved=(seq.length!=seqF.length);
@@ -472,13 +484,20 @@ function getSequence(seqID){
 		commenttext = commenttext + "contains more than one FASTA sequence, additional sequences are ignored! ".fontcolor('red');
 	}
 
+	document.getElementById("commenton").innerHTML = commenttext;
+
+	seqObject.isCircular = document.getElementById("circular" + seqID).checked;
+	seqObject.seq = seq;
+//	console.log("Test:", seqObject);
+
+	// Should probably go in the final version, that isn't that clean anyway.
 	if(document.getElementById("circular" + seqID).checked == true){
 		seq=seq+seq.substr(0, 30) //find matches also for the circular case
 	}
 
-	document.getElementById("commenton").innerHTML = commenttext;
+	seqObject.circSeq = seq;
 
-	return seq;
+	return seqObject;
 }
 
 function makeCutText(enzyme, seq)
@@ -529,12 +548,15 @@ function myFunction() {
 	document.getElementById("fileWarning").innerHTML = "";
 
 	document.getElementById("commenton").innerHTML = commenttext;
-	seq1=getSequence("1");
-	seq2=getSequence("2");
-	seq3=getSequence("3");
+	seqObj1=getSequence("1");
+	seqObj2=getSequence("2");
+	seqObj3=getSequence("3");
 
-	let differentiatingEnzymes = findDifferentiatingEnzyme(seq1, seq2);
-	console.log("Enzymes that can differentiate the plasmids:", differentiatingEnzymes);
+	seq1 = seqObj1.circSeq;
+	seq2 = seqObj2.circSeq;
+	seq3 = seqObj3.circSeq;
+	let differentiatingEnzymes = findDifferentiatingEnzyme(seqObj1, seqObj2);
+//	console.log("Enzymes that can differentiate the plasmids:", differentiatingEnzymes);
 
 	var enzymesToUse = document.getElementById("EnzymesToUse");
 
@@ -627,7 +649,7 @@ function myFunction() {
 
 
 
-function findDifferentiatingEnzyme(plasmid1, plasmid2) {
+function findDifferentiatingEnzyme(seqObj1, seqObj2) {
 	var enzymesToUse = document.getElementById("EnzymesToUse");
 
 	let differentiatingEnzymes = [];
@@ -639,8 +661,8 @@ function findDifferentiatingEnzyme(plasmid1, plasmid2) {
 			continue;
 		}
 
-		let fragments1 = generateFragments(enzymeArray[i], plasmid1);
-		let fragments2 = generateFragments(enzymeArray[i], plasmid2);
+		let fragments1 = generateFragments(enzymeArray[i], seqObj1);
+		let fragments2 = generateFragments(enzymeArray[i], seqObj2);
 
 		let output1 = ">\n"
 		output1 += fragments1[0];
@@ -659,9 +681,6 @@ function findDifferentiatingEnzyme(plasmid1, plasmid2) {
 			output2 += fragments2[i];
 		}
 		document.getElementById("frag2").value = output2;
-
-		console.log("Fragments1:", fragments1);
-		console.log("Fragments2:", fragments2);
 
 		if (isDifferentiable(fragments1, fragments2)) {
 			differentiatingEnzymes.push(enzymeArray[i]);
@@ -683,32 +702,58 @@ function isDifferentiable(fragments1, fragments2) {
 }
 
 // Example function that generates fragments
-function generateFragments(enzyme, plasmidSequence) {
+function generateFragments(enzyme, seqObj) {
 
 	let matchIndices = [];
 
 	for (let i = 0; i < enzyme.regexfw.length; i++)
 	{
-		let matchIndicesFor = Array.from(plasmidSequence.matchAll(enzyme.regexfw[i])).map(x => x.index + enzyme.cutPosFw[i]);
-		let matchIndicesRev = Array.from(plasmidSequence.matchAll(enzyme.regexrv[i])).map(x => x.index + enzyme.cutPosRv[i]);
+		let matchIndicesFor = Array.from(seqObj.seq.matchAll(enzyme.regexfw[i])).map(x => x.index + enzyme.cutPosFw[i]);
+		let matchIndicesRev = Array.from(seqObj.seq.matchAll(enzyme.regexrv[i])).map(x => x.index + enzyme.cutPosRv[i]);
 
 		matchIndices = matchIndices.concat(matchIndicesFor);
 		matchIndices = matchIndices.concat(matchIndicesRev);
 	}
 
-	matchIndices.sort(function(a, b){return a-b});
-	matchIndices = [...new Set(matchIndices)];
-
 	let fragments = []
-	for (let i = 0; i < matchIndices.length-1; i++) {
-		let start = matchIndices[i];
-		let end   = matchIndices[i+1];
-		fragments.push(plasmidSequence.slice(start, end));
-	}
 
-	// @ToDo: Do circular matching and end pieces
-	let start = matchIndices[matchIndices.length-1];
-	fragments.push(plasmidSequence.slice(start));
+	if (matchIndices.length > 0)
+	{
+		matchIndices.sort(function(a, b){return a-b});
+		matchIndices = [...new Set(matchIndices)];
+
+		if(seqObj.isCircular)
+		{
+			let start1 = 0;
+			let end1   = matchIndices[0];
+			let part1  = seqObj.seq.slice(start1, end1)
+			let start2 = matchIndices[matchIndices.length-1];
+			let part2  = seqObj.seq.slice(start2)
+			fragments.push(part2 + part1);
+		}
+		else
+		{
+			let start = 0;
+			let end   = matchIndices[0];
+			fragments.push(seqObj.seq.slice(start, end));
+		}
+
+		for (let i = 0; i < matchIndices.length-1; i++) {
+			let start = matchIndices[i];
+			let end   = matchIndices[i+1];
+			fragments.push(seqObj.seq.slice(start, end));
+		}
+
+		if(!seqObj.isCircular)
+		{
+			let start = matchIndices[matchIndices.length-1];
+			fragments.push(seqObj.seq.slice(start));
+		}
+	}
+	else
+	{
+		fragments.push(seqObj.seq);
+	}
 
 	return fragments;
 }
