@@ -650,7 +650,105 @@ function myFunction() {
 // Assuming enzymeList is an array of enzyme names
 // and generateFragments is a function that takes enzyme and plasmid sequence and returns fragment lengths
 
+function getMaxLength(fragments)
+{
+	let maxLength = 0;
+	for(var i = 0; i < fragments.length; i++)
+	{
+		if(maxLength < fragments[i].length)
+			maxLength = fragments[i].length;
+	}
 
+	return maxLength;
+}
+
+function getMaxLength2(fragments1, fragments2)
+{
+	let maxLength1 = getMaxLength(fragments1);
+	let maxLength2 = getMaxLength(fragments2);
+
+	if (maxLength1 > maxLength2)
+		return maxLength1;
+	else
+		return maxLength2;
+}
+
+function plotFragments(fragments1, fragments2)
+{
+	const ladder      = [50, 100, 200, 300, 500, 1000, 1500, 2000, 3000, 5000]
+	const scaleFactor = 100;
+	let maxLadder = ladder[ladder.length-1];
+	let maxLength = getMaxLength2(fragments1, fragments2);
+	if (maxLength < maxLadder)
+		maxLength = maxLadder;
+	maxLength = Math.round(Math.log(maxLength) * scaleFactor);
+
+//	const gelLength   = 1500;
+	const padding     = 50;
+	const margin      = 50;
+	const bandLength  = 100;
+	const gelCanvas   = document.getElementById("gelCanvas");
+	gelCanvas.width   = 3*bandLength + 4*margin;
+	gelCanvas.height  = maxLength + 2*padding;
+	const ctx = gelCanvas.getContext("2d");
+	ctx.translate(0.5, 0.5);
+	ctx.lineWidth = 3;
+
+	let leftPos = margin;
+	ctx.beginPath();
+	ctx.strokeStyle = "black";
+	for (var i = 0; i < ladder.length; i++)
+	{
+//		ctx.beginPath();
+//		ctx.strokeStyle = "black";
+		let length = Math.round(Math.log(ladder[i]) * scaleFactor);
+		let pos = maxLength - length + padding;
+		ctx.moveTo(leftPos, pos);
+		ctx.lineTo(leftPos + bandLength, pos);
+//		console.log("Length:", length);
+//		console.log("Pos:", pos);
+		ctx.stroke();
+//		ctx.closePath();
+	}
+
+	leftPos += bandLength;
+	leftPos += margin;
+	ctx.beginPath();
+	ctx.strokeStyle = "red";
+	for (var i = 0; i < fragments1.length; i++)
+	{
+//		ctx.beginPath();
+		let length = Math.round(Math.log(fragments1[i].length) * scaleFactor);
+		let pos = maxLength - length + padding;
+		ctx.moveTo(leftPos, pos);
+		ctx.lineTo(leftPos + bandLength, pos);
+//		console.log("Length:", length);
+//		console.log("Pos:", pos);
+		ctx.stroke();
+//		ctx.closePath();
+	}
+//	ctx.closePath();
+
+	ctx.beginPath();
+	leftPos += bandLength;
+	leftPos += margin;
+	ctx.beginPath();
+	ctx.strokeStyle = "green";
+	for (var i = 0; i < fragments2.length; i++)
+	{
+//		ctx.beginPath();
+		let length = Math.round(Math.log(fragments2[i].length) * scaleFactor);
+		let pos = maxLength - length + padding;
+		ctx.moveTo(leftPos, pos);
+		ctx.lineTo(leftPos + bandLength, pos);
+//		console.log("Length:", length);
+//		console.log("Pos:", pos);
+		ctx.stroke();
+//		ctx.closePath();
+	}
+	ctx.closePath();
+//	ctx.fillRect(20, 20, 150, 100);
+}
 
 function findDifferentiatingEnzyme(seqObj1, seqObj2) {
 	var enzymesToUse = document.getElementById("EnzymesToUse");
@@ -688,7 +786,9 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2) {
 		if (isDifferentiable(fragments1, fragments2)) {
 			differentiatingEnzymes.push(enzymeArray[i]);
 		}
-	};
+
+		plotFragments(fragments1, fragments2);
+	}
 
 	return differentiatingEnzymes;
 }
