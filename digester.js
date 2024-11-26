@@ -558,7 +558,7 @@ function myFunction() {
 	seq1 = seqObj1.circSeq;
 	seq2 = seqObj2.circSeq;
 	seq3 = seqObj3.circSeq;
-	let differentiatingEnzymes = findDifferentiatingEnzyme(seqObj1, seqObj2);
+	let differentiatingEnzymes = findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3);
 //	console.log("Enzymes that can differentiate the plasmids:", differentiatingEnzymes);
 
 	var enzymesToUse = document.getElementById("EnzymesToUse");
@@ -662,23 +662,21 @@ function getMaxLength(fragments)
 	return maxLength;
 }
 
-function getMaxLength2(fragments1, fragments2)
+function getMaxLength2(fragments1, fragments2, fragments3)
 {
 	let maxLength1 = getMaxLength(fragments1);
 	let maxLength2 = getMaxLength(fragments2);
+	let maxLength3 = getMaxLength(fragments3);
 
-	if (maxLength1 > maxLength2)
-		return maxLength1;
-	else
-		return maxLength2;
+	return Math.max(maxLength1, maxLength2, maxLength3);
 }
 
-function plotFragments(fragments1, fragments2)
+function plotFragments(fragments1, fragments2, fragments3)
 {
 	const ladder      = [50, 100, 200, 300, 500, 1000, 1500, 2000, 3000, 5000]
 	const scaleFactor = 100;
 	let maxLadder = ladder[ladder.length-1];
-	let maxLength = getMaxLength2(fragments1, fragments2);
+	let maxLength = getMaxLength2(fragments1, fragments2, fragments3);
 	if (maxLength < maxLadder)
 		maxLength = maxLadder;
 	maxLength = Math.round(Math.log(maxLength) * scaleFactor);
@@ -688,7 +686,7 @@ function plotFragments(fragments1, fragments2)
 	const margin      = 50;
 	const bandLength  = 100;
 	const gelCanvas   = document.getElementById("gelCanvas");
-	gelCanvas.width   = 3*bandLength + 4*margin;
+	gelCanvas.width   = 4*bandLength + 5*margin;
 	gelCanvas.height  = maxLength + 2*padding;
 	const ctx = gelCanvas.getContext("2d");
 	ctx.translate(0.5, 0.5);
@@ -746,11 +744,29 @@ function plotFragments(fragments1, fragments2)
 		ctx.stroke();
 //		ctx.closePath();
 	}
+
+	ctx.beginPath();
+	leftPos += bandLength;
+	leftPos += margin;
+	ctx.beginPath();
+	ctx.strokeStyle = "blue";
+	for (var i = 0; i < fragments3.length; i++)
+	{
+//		ctx.beginPath();
+		let length = Math.round(Math.log(fragments3[i].length) * scaleFactor);
+		let pos = maxLength - length + padding;
+		ctx.moveTo(leftPos, pos);
+		ctx.lineTo(leftPos + bandLength, pos);
+//		console.log("Length:", length);
+//		console.log("Pos:", pos);
+		ctx.stroke();
+//		ctx.closePath();
+	}
 	ctx.closePath();
 //	ctx.fillRect(20, 20, 150, 100);
 }
 
-function findDifferentiatingEnzyme(seqObj1, seqObj2) {
+function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 	var enzymesToUse = document.getElementById("EnzymesToUse");
 
 	let differentiatingEnzymes = [];
@@ -764,6 +780,7 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2) {
 
 		let fragments1 = generateFragments(enzymeArray[i], seqObj1);
 		let fragments2 = generateFragments(enzymeArray[i], seqObj2);
+		let fragments3 = generateFragments(enzymeArray[i], seqObj3);
 
 		let output1 = ">\n"
 		output1 += fragments1[0];
@@ -783,17 +800,26 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2) {
 		}
 		document.getElementById("frag2").value = output2;
 
-		if (isDifferentiable(fragments1, fragments2)) {
+		let output3 = ">\n"
+		output3 += fragments3[0];
+		for(let i = 1; i < fragments3.length; ++i)
+		{
+			output3 += "\n>\n";
+			output3 += fragments3[i];
+		}
+		document.getElementById("frag3").value = output3;
+
+		if (isDifferentiable(fragments1, fragments2, fragments3)) {
 			differentiatingEnzymes.push(enzymeArray[i]);
 		}
 
-		plotFragments(fragments1, fragments2);
+		plotFragments(fragments1, fragments2, fragments3);
 	}
 
 	return differentiatingEnzymes;
 }
 
-function isDifferentiable(fragments1, fragments2) {
+function isDifferentiable(fragments1, fragments2, fragments3) {
 	// Check for clear differences, e.g., number of fragments or unique fragment sizes
 	if (fragments1.length !== fragments2.length) return true;
 	for (let i = 0; i < fragments1.length; i++) {
@@ -832,6 +858,9 @@ function generateFragments(enzyme, seqObj) {
 			let part1  = seqObj.seq.slice(start1, end1)
 			let start2 = matchIndices[matchIndices.length-1];
 			let part2  = seqObj.seq.slice(start2)
+
+			//@ToDo: Check for cut in that connected fragment
+			//@ToDo: Check for out of recognition seq cutters.
 			fragments.push(part2 + part1);
 		}
 		else
