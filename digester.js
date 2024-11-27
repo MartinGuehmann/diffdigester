@@ -681,13 +681,11 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 		maxLength = maxLadder;
 	maxLength = Math.round(Math.log(maxLength) * scaleFactor);
 
-//	const gelLength   = 1500;
 	const padding     = 50;
 	const margin      = 50;
 	const bandLength  = 100;
 	var gelCanvas = document.createElement('canvas');
 	gelCanvas.id = 'Gel-' + enzyme;
-//	const gelCanvas   = document.getElementById("gelCanvas");
 	gelCanvas.width   = 4*bandLength + 5*margin;
 	gelCanvas.height  = maxLength + 2*padding;
 	const ctx = gelCanvas.getContext("2d");
@@ -699,16 +697,11 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	ctx.strokeStyle = "black";
 	for (var i = 0; i < ladder.length; i++)
 	{
-//		ctx.beginPath();
-//		ctx.strokeStyle = "black";
 		let length = Math.round(Math.log(ladder[i]) * scaleFactor);
 		let pos = maxLength - length + padding;
 		ctx.moveTo(leftPos, pos);
 		ctx.lineTo(leftPos + bandLength, pos);
-//		console.log("Length:", length);
-//		console.log("Pos:", pos);
 		ctx.stroke();
-//		ctx.closePath();
 	}
 
 	leftPos += bandLength;
@@ -717,17 +710,12 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	ctx.strokeStyle = "red";
 	for (var i = 0; i < fragments1.length; i++)
 	{
-//		ctx.beginPath();
 		let length = Math.round(Math.log(fragments1[i].length) * scaleFactor);
 		let pos = maxLength - length + padding;
 		ctx.moveTo(leftPos, pos);
 		ctx.lineTo(leftPos + bandLength, pos);
-//		console.log("Length:", length);
-//		console.log("Pos:", pos);
 		ctx.stroke();
-//		ctx.closePath();
 	}
-//	ctx.closePath();
 
 	ctx.beginPath();
 	leftPos += bandLength;
@@ -736,15 +724,11 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	ctx.strokeStyle = "green";
 	for (var i = 0; i < fragments2.length; i++)
 	{
-//		ctx.beginPath();
 		let length = Math.round(Math.log(fragments2[i].length) * scaleFactor);
 		let pos = maxLength - length + padding;
 		ctx.moveTo(leftPos, pos);
 		ctx.lineTo(leftPos + bandLength, pos);
-//		console.log("Length:", length);
-//		console.log("Pos:", pos);
 		ctx.stroke();
-//		ctx.closePath();
 	}
 
 	ctx.beginPath();
@@ -754,18 +738,13 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	ctx.strokeStyle = "blue";
 	for (var i = 0; i < fragments3.length; i++)
 	{
-//		ctx.beginPath();
 		let length = Math.round(Math.log(fragments3[i].length) * scaleFactor);
 		let pos = maxLength - length + padding;
 		ctx.moveTo(leftPos, pos);
 		ctx.lineTo(leftPos + bandLength, pos);
-//		console.log("Length:", length);
-//		console.log("Pos:", pos);
 		ctx.stroke();
-//		ctx.closePath();
 	}
 	ctx.closePath();
-//	ctx.fillRect(20, 20, 150, 100);
 
 	document.body.appendChild(gelCanvas);
 }
