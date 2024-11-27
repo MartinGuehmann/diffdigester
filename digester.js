@@ -427,6 +427,12 @@ function clearresults(){
 
 	document.getElementById("frag1").value = "";
 	document.getElementById("frag2").value = "";
+	document.getElementById("frag3").value = "";
+
+	let gelCanvasesses = document.getElementById("gelCanvasses");
+	while(gelCanvasesses.firstChild){
+		gelCanvasesses.firstChild.remove()
+	}
 
 	resetListLabels();
 }
@@ -746,10 +752,13 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	}
 	ctx.closePath();
 
-	document.body.appendChild(gelCanvas);
+	document.getElementById("gelCanvasses").appendChild(gelCanvas);
+	let linebreak = document.createElement("br");
+	document.getElementById("gelCanvasses").appendChild(linebreak);
 }
 
 function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
+	clearresults();
 	var enzymesToUse = document.getElementById("EnzymesToUse");
 
 	let differentiatingEnzymes = [];
