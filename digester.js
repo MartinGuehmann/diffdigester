@@ -671,7 +671,7 @@ function getMaxLength2(fragments1, fragments2, fragments3)
 	return Math.max(maxLength1, maxLength2, maxLength3);
 }
 
-function plotFragments(fragments1, fragments2, fragments3)
+function plotFragments(fragments1, fragments2, fragments3, enzyme)
 {
 	const ladder      = [50, 100, 200, 300, 500, 1000, 1500, 2000, 3000, 5000]
 	const scaleFactor = 100;
@@ -685,7 +685,9 @@ function plotFragments(fragments1, fragments2, fragments3)
 	const padding     = 50;
 	const margin      = 50;
 	const bandLength  = 100;
-	const gelCanvas   = document.getElementById("gelCanvas");
+	var gelCanvas = document.createElement('canvas');
+	gelCanvas.id = 'Gel-' + enzyme;
+//	const gelCanvas   = document.getElementById("gelCanvas");
 	gelCanvas.width   = 4*bandLength + 5*margin;
 	gelCanvas.height  = maxLength + 2*padding;
 	const ctx = gelCanvas.getContext("2d");
@@ -764,6 +766,8 @@ function plotFragments(fragments1, fragments2, fragments3)
 	}
 	ctx.closePath();
 //	ctx.fillRect(20, 20, 150, 100);
+
+	document.body.appendChild(gelCanvas);
 }
 
 function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
@@ -813,7 +817,7 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 			differentiatingEnzymes.push(enzymeArray[i]);
 		}
 
-		plotFragments(fragments1, fragments2, fragments3);
+		plotFragments(fragments1, fragments2, fragments3, enzymeArray[i]);
 	}
 
 	return differentiatingEnzymes;
