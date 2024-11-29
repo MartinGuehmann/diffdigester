@@ -696,6 +696,7 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	gelCanvas.height  = maxLength + 2*padding;
 	const ctx = gelCanvas.getContext("2d");
 	ctx.translate(0.5, 0.5);
+	ctx.strokeRect(0, 0, gelCanvas.width, gelCanvas.height);
 	ctx.lineWidth = 3;
 
 	let leftPos = margin;
