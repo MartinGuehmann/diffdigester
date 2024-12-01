@@ -689,8 +689,9 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 
 	const padding     = 50;
 	const margin      = 25;
+	const marginSizes = 50;
 	const bandLength  = 50;
-	let   gelWidth    = 4*bandLength + 5*margin;
+	let   gelWidth    = marginSizes + 4*bandLength + 5*margin;
 	let   gelHeight   = maxLength + 2*padding;
 	let gelDrawing = document.createElementNS('http://www.w3.org/2000/svg','svg');
 	gelDrawing.setAttribute('id', 'Gel-' + enzyme.name);
@@ -698,14 +699,14 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	gelDrawing.setAttribute('height', gelHeight);
 
 	let gelFrame = document.createElementNS('http://www.w3.org/2000/svg','rect');
-	gelFrame.setAttribute('width', gelWidth-2);
+	gelFrame.setAttribute('width', gelWidth-2 - marginSizes);
 	gelFrame.setAttribute('height', gelHeight-2);
 	gelFrame.setAttribute('style', "stroke-width:1;stroke:black;fill:transparent");
-	gelFrame.setAttribute('x', 1);
+	gelFrame.setAttribute('x', 1 + marginSizes);
 	gelFrame.setAttribute('y', 1);
 	gelDrawing.appendChild(gelFrame);
 
-	let leftPos = margin;
+	let leftPos = margin + marginSizes;
 	for (let i = 0; i < ladder.length; i++)
 	{
 		let length = Math.round(Math.log(ladder[i]) * scaleFactor);
@@ -774,8 +775,23 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	enzymeName.setAttribute('fill', 'black');
 	let bbox = enzymeName.getBBox();
 
-	enzymeName.setAttribute('x', gelWidth/2 - bbox.width/2);
+	enzymeName.setAttribute('x', marginSizes/2 + gelWidth/2 - bbox.width/2);
 	enzymeName.setAttribute('y', bbox.height);
+
+	for(let i = 0; i < ladder.length; ++i)
+	{
+		let size = document.createElementNS('http://www.w3.org/2000/svg','text');
+		size.textContent = ladder[i];
+		gelDrawing.appendChild(size);
+		enzymeName.setAttribute('fill', 'black');
+		let bbox = enzymeName.getBBox();
+
+		let length = Math.round(Math.log(ladder[i]) * scaleFactor);
+		let pos = maxLength - length + padding;
+
+		size.setAttribute('x', 2);
+		size.setAttribute('y', pos + bbox.height/4);
+	}
 }
 
 function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
