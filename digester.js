@@ -687,75 +687,95 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 		maxLength = maxLadder;
 	maxLength = Math.round(Math.log(maxLength) * scaleFactor);
 
-	const padding     = 25;
+	const padding     = 50;
 	const margin      = 25;
 	const bandLength  = 50;
-	var gelCanvas = document.createElement('canvas');
-	gelCanvas.id = 'Gel-' + enzyme;
-	gelCanvas.width   = 4*bandLength + 5*margin;
-	gelCanvas.height  = maxLength + 2*padding;
-	const ctx = gelCanvas.getContext("2d");
-	ctx.translate(0.5, 0.5);
-	ctx.strokeRect(0, 0, gelCanvas.width, gelCanvas.height);
-	ctx.lineWidth = 3;
+	let   gelWidth    = 4*bandLength + 5*margin;
+	let   gelHeight   = maxLength + 2*padding;
+	let gelDrawing = document.createElementNS('http://www.w3.org/2000/svg','svg');
+	gelDrawing.setAttribute('id', 'Gel-' + enzyme.name);
+	gelDrawing.setAttribute('width', gelWidth);
+	gelDrawing.setAttribute('height', gelHeight);
+
+	let gelFrame = document.createElementNS('http://www.w3.org/2000/svg','rect');
+	gelFrame.setAttribute('width', gelWidth-2);
+	gelFrame.setAttribute('height', gelHeight-2);
+	gelFrame.setAttribute('style', "stroke-width:1;stroke:black;fill:transparent");
+	gelFrame.setAttribute('x', 1);
+	gelFrame.setAttribute('y', 1);
+	gelDrawing.appendChild(gelFrame);
 
 	let leftPos = margin;
-	ctx.beginPath();
-	ctx.strokeStyle = "black";
-	for (var i = 0; i < ladder.length; i++)
+	for (let i = 0; i < ladder.length; i++)
 	{
 		let length = Math.round(Math.log(ladder[i]) * scaleFactor);
 		let pos = maxLength - length + padding;
-		ctx.moveTo(leftPos, pos);
-		ctx.lineTo(leftPos + bandLength, pos);
-		ctx.stroke();
+		var gelBand = document.createElementNS('http://www.w3.org/2000/svg','line');
+		gelBand.setAttribute('style', "stroke-width:3;stroke:black");
+		gelBand.setAttribute('x1', leftPos);
+		gelBand.setAttribute('y1', pos);
+		gelBand.setAttribute('x2', leftPos + bandLength);
+		gelBand.setAttribute('y2', pos);
+		gelDrawing.appendChild(gelBand);
 	}
 
 	leftPos += bandLength;
 	leftPos += margin;
-	ctx.beginPath();
-	ctx.strokeStyle = "red";
-	for (var i = 0; i < fragments1.length; i++)
+	for (let i = 0; i < fragments1.length; i++)
 	{
 		let length = Math.round(Math.log(fragments1[i].length) * scaleFactor);
 		let pos = maxLength - length + padding;
-		ctx.moveTo(leftPos, pos);
-		ctx.lineTo(leftPos + bandLength, pos);
-		ctx.stroke();
+		var gelBand = document.createElementNS('http://www.w3.org/2000/svg','line');
+		gelBand.setAttribute('style', "stroke-width:3;stroke:red");
+		gelBand.setAttribute('x1', leftPos);
+		gelBand.setAttribute('y1', pos);
+		gelBand.setAttribute('x2', leftPos + bandLength);
+		gelBand.setAttribute('y2', pos);
+		gelDrawing.appendChild(gelBand);
 	}
 
-	ctx.beginPath();
 	leftPos += bandLength;
 	leftPos += margin;
-	ctx.beginPath();
-	ctx.strokeStyle = "green";
-	for (var i = 0; i < fragments2.length; i++)
+	for (let i = 0; i < fragments2.length; i++)
 	{
 		let length = Math.round(Math.log(fragments2[i].length) * scaleFactor);
 		let pos = maxLength - length + padding;
-		ctx.moveTo(leftPos, pos);
-		ctx.lineTo(leftPos + bandLength, pos);
-		ctx.stroke();
+		var gelBand = document.createElementNS('http://www.w3.org/2000/svg','line');
+		gelBand.setAttribute('style', "stroke-width:3;stroke:green");
+		gelBand.setAttribute('x1', leftPos);
+		gelBand.setAttribute('y1', pos);
+		gelBand.setAttribute('x2', leftPos + bandLength);
+		gelBand.setAttribute('y2', pos);
+		gelDrawing.appendChild(gelBand);
 	}
 
-	ctx.beginPath();
 	leftPos += bandLength;
 	leftPos += margin;
-	ctx.beginPath();
-	ctx.strokeStyle = "blue";
-	for (var i = 0; i < fragments3.length; i++)
+	for (let i = 0; i < fragments3.length; i++)
 	{
 		let length = Math.round(Math.log(fragments3[i].length) * scaleFactor);
 		let pos = maxLength - length + padding;
-		ctx.moveTo(leftPos, pos);
-		ctx.lineTo(leftPos + bandLength, pos);
-		ctx.stroke();
+		var gelBand = document.createElementNS('http://www.w3.org/2000/svg','line');
+		gelBand.setAttribute('style', "stroke-width:3;stroke:blue");
+		gelBand.setAttribute('x1', leftPos);
+		gelBand.setAttribute('y1', pos);
+		gelBand.setAttribute('x2', leftPos + bandLength);
+		gelBand.setAttribute('y2', pos);
+		gelDrawing.appendChild(gelBand);
 	}
-	ctx.closePath();
 
-	document.getElementById("gelCanvasses").appendChild(gelCanvas);
+	document.getElementById("gelCanvasses").appendChild(gelDrawing);
 	let linebreak = document.createElement("br");
 	document.getElementById("gelCanvasses").appendChild(linebreak);
+
+	let enzymeName = document.createElementNS('http://www.w3.org/2000/svg','text');
+	enzymeName.textContent = enzyme.name;
+	gelDrawing.appendChild(enzymeName);
+	enzymeName.setAttribute('fill', 'black');
+	let bbox = enzymeName.getBBox();
+
+	enzymeName.setAttribute('x', gelWidth/2 - bbox.width/2);
+	enzymeName.setAttribute('y', bbox.height);
 }
 
 function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
@@ -764,7 +784,7 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 
 	let differentiatingEnzymes = [];
 
-	for (var i = 0; i < enzymeArray.length; i++)
+	for (let i = 0; i < enzymeArray.length; i++)
 	{
 		if(enzymesToUse.namedItem(enzymeArray[i].name) == null)
 		{
