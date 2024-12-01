@@ -429,9 +429,9 @@ function clearresults(){
 	document.getElementById("frag2").value = "";
 	document.getElementById("frag3").value = "";
 
-	let gelCanvasesses = document.getElementById("gelCanvasses");
-	while(gelCanvasesses.firstChild){
-		gelCanvasesses.firstChild.remove()
+	let gelDrawings = document.getElementById("gelDrawings");
+	while(gelDrawings.firstChild){
+		gelDrawings.firstChild.remove()
 	}
 
 	resetListLabels();
@@ -765,14 +765,15 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 		gelDrawing.appendChild(gelBand);
 	}
 
-	document.getElementById("gelCanvasses").appendChild(gelDrawing);
+	document.getElementById("gelDrawings").appendChild(gelDrawing);
 	let linebreak = document.createElement("br");
-	document.getElementById("gelCanvasses").appendChild(linebreak);
+	document.getElementById("gelDrawings").appendChild(linebreak);
 
 	let enzymeName = document.createElementNS('http://www.w3.org/2000/svg','text');
 	enzymeName.textContent = enzyme.name;
-	gelDrawing.appendChild(enzymeName);
 	enzymeName.setAttribute('fill', 'black');
+	gelDrawing.appendChild(enzymeName);
+	// getBBox only gives proper numbers when it is on screen.
 	let bbox = enzymeName.getBBox();
 
 	enzymeName.setAttribute('x', marginSizes/2 + gelWidth/2 - bbox.width/2);
