@@ -571,6 +571,46 @@
 			</div>
 		</div><br>
 
+		<div>
+			<table style="text-align: left; border:none;" cellpadding="2" cellspacing="2">
+				<tbody>
+					<tr>
+						<td style="vertical-align: top; border:none;">
+							<label for="minFragments" title="Only show enzymes that cut each sequence at least into so many fragments.">Minimum number of fragments: </label>
+						</td>
+						<td style="horizontal-align: top; border:none;">
+							<input id="minFragments" value="2" min="0" type="number" title="Only show enzymes that cut each sequence at least into so many fragments.">
+						</td>
+					<tr/>
+					<tr>
+						<td style="vertical-align: top; border:none;">
+							<label for="maxFragments" title="Only show enzymes that cut each sequence at most into so many fragments.">Maximum number of fragments: </label>
+						</td>
+						<td style="horizontal-align: top; border:none;">
+							<input id="maxFragments" value="10" min="0" type="number" title="Only show enzymes that cut each sequence at most into so many fragments.">
+						</td>
+					<tr/>
+				</tbody>
+					<tr>
+						<td style="vertical-align: top; border:none;">
+							<label for="minFragmentSize" title="Only show enzymes that produce fragments bigger than that or equal.">Minimum fragment size (in bp): </label>
+						</td>
+						<td style="horizontal-align: top; border:none;">
+							<input id="minFragmentSize" value="25" min="0" type="number" title="Only show enzymes that produce fragments bigger than that or equal.">
+						</td>
+					<tr/>
+					<tr>
+						<td style="vertical-align: top; border:none;">
+							<label for="maxFragmentSize" title="Only show enzymes that produce fragments smaller than that or equal.">Maximum fragment size (in bp): </label>
+						</td>
+						<td style="horizontal-align: top; border:none;">
+							<input id="maxFragmentSize" value="5000" min="0" type="number" title="Only show enzymes that produce fragments smaller than that or equal.">
+						</td>
+					<tr/>
+				</tbody>
+			</table>
+		</dif><br>
+
 		<table style="text-align: left; border:none;" cellpadding="2" cellspacing="2">
 			<tbody>
 				<tr>

@@ -812,6 +812,32 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 		let fragments2 = generateFragments(enzymeArray[i], seqObj2);
 		let fragments3 = generateFragments(enzymeArray[i], seqObj3);
 
+		let minFragments    = document.getElementById("minFragments").value;
+		if (minFragments > fragments1.length
+		||  minFragments > fragments2.length
+		||  minFragments > fragments3.length
+		){
+			continue;
+		}
+
+		let maxFragments    = document.getElementById("maxFragments").value;
+		if (maxFragments < fragments1.length
+		||  maxFragments < fragments2.length
+		||  maxFragments < fragments3.length
+		){
+			continue;
+		}
+
+		let minFragmentSize = document.getElementById("minFragmentSize").value;
+		if(!noneSmaller(fragments1, minFragmentSize)) continue;
+		if(!noneSmaller(fragments2, minFragmentSize)) continue;
+		if(!noneSmaller(fragments3, minFragmentSize)) continue;
+
+		let maxFragmentSize = document.getElementById("maxFragmentSize").value;
+		if(!noneBigger(fragments1, maxFragmentSize)) continue;
+		if(!noneBigger(fragments2, maxFragmentSize)) continue;
+		if(!noneBigger(fragments3, maxFragmentSize)) continue;
+
 		let output1 = ">\n"
 		output1 += fragments1[0];
 		for(let i = 1; i < fragments1.length; ++i)
@@ -847,6 +873,28 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 	}
 
 	return differentiatingEnzymes;
+}
+
+function noneBigger(fragments, maxValue)
+{
+	for(let i = 0; i < fragments.length; ++i)
+	{
+		if(fragments[i].length > maxValue)
+			return false;
+	}
+
+	return true;
+}
+
+function noneSmaller(fragments, minValue)
+{
+	for(let i = 0; i < fragments.length; ++i)
+	{
+		if(fragments[i].length < minValue)
+			return false;
+	}
+
+	return true;
 }
 
 function isDifferentiable(fragments1, fragments2, fragments3) {
