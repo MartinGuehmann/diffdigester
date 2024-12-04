@@ -924,6 +924,12 @@ function isDifferentiable(fragments1, fragments2, fragments3) {
 // Example function that generates fragments
 function generateFragments(enzyme, seqObj) {
 
+	let fragments = [];
+	if(seqObj.seq.length == 0)
+	{
+		return fragments;
+	}
+
 	let matchIndices = [];
 
 	for (let i = 0; i < enzyme.regexfw.length; i++)
@@ -936,8 +942,6 @@ function generateFragments(enzyme, seqObj) {
 		matchIndices = matchIndices.concat(matchIndicesFor);
 		matchIndices = matchIndices.concat(matchIndicesRev);
 	}
-
-	let fragments = []
 
 	if (matchIndices.length > 0)
 	{
