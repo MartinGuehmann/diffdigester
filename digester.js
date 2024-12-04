@@ -27,8 +27,8 @@ for (i = 0; i < enzymeentry.length; i++)
 
 		enzyme.regexfw = [];
 		enzyme.regexrv = [];
-		enzyme.regexfw[0] = makeregex(reverseComplement);
-		enzyme.regexrv[0] = makeregex(cleanRecognition);
+		enzyme.regexfw[0] = makeregex(cleanRecognition);
+		enzyme.regexrv[0] = makeregex(reverseComplement);
 
 		enzyme.cutPosFw = [];
 		enzyme.cutPosRv = [];
@@ -42,6 +42,8 @@ for (i = 0; i < enzymeentry.length; i++)
 		else if(enzyme.cutPosFw[0] > enzyme.cutPosRv[0])
 			enzyme.cutPosFw[0]--;
 
+		enzyme.cutPosRv[0] = cleanRecognition.length - enzyme.cutPosRv[0];
+
 		enzymeArray.push(enzyme);
 	}
 	else
@@ -52,8 +54,8 @@ for (i = 0; i < enzymeentry.length; i++)
 		cleanRecognition = clean(enzyme.recognition[newIndex]);
 		reverseComplement = revcompl(cleanRecognition);
 
-		enzyme.regexfw[newIndex] = makeregex(reverseComplement);
-		enzyme.regexrv[newIndex] = makeregex(cleanRecognition);
+		enzyme.regexfw[newIndex] = makeregex(cleanRecognition);
+		enzyme.regexrv[newIndex] = makeregex(reverseComplement);
 
 		enzyme.cutPosFw[newIndex] = enzyme.recognition[newIndex].indexOf("\'");
 		enzyme.cutPosRv[newIndex] = enzyme.recognition[newIndex].indexOf("_");
@@ -63,6 +65,8 @@ for (i = 0; i < enzymeentry.length; i++)
 			enzyme.cutPosRv[newIndex]--;
 		else if(enzyme.cutPosFw[newIndex] > enzyme.cutPosRv[newIndex])
 			enzyme.cutPosFw[newIndex]--;
+
+		enzyme.cutPosRv[newIndex] = cleanRecognition.length - enzyme.cutPosRv[newIndex];
 	}
 }
 
@@ -915,6 +919,8 @@ function generateFragments(enzyme, seqObj) {
 
 	for (let i = 0; i < enzyme.regexfw.length; i++)
 	{
+		console.log(enzyme.regexfw[i], enzyme.cutPosFw[i]);
+		console.log(enzyme.regexrv[i], enzyme.cutPosRv[i]);
 		let matchIndicesFor = Array.from(seqObj.seq.matchAll(enzyme.regexfw[i])).map(x => x.index + enzyme.cutPosFw[i]);
 		let matchIndicesRev = Array.from(seqObj.seq.matchAll(enzyme.regexrv[i])).map(x => x.index + enzyme.cutPosRv[i]);
 
