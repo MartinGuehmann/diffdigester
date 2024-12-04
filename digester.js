@@ -842,6 +842,8 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 		if(!noneBigger(fragments2, maxFragmentSize)) continue;
 		if(!noneBigger(fragments3, maxFragmentSize)) continue;
 
+		if(fragments1.length > 0)
+		{
 		let output1 = ">\n"
 		output1 += fragments1[0];
 		for(let i = 1; i < fragments1.length; ++i)
@@ -850,7 +852,10 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 			output1 += fragments1[i];
 		}
 		document.getElementById("frag1").value = output1;
+		}
 
+		if(fragments2.length > 0)
+		{
 		let output2 = ">\n"
 		output2 += fragments2[0];
 		for(let i = 1; i < fragments2.length; ++i)
@@ -859,7 +864,10 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 			output2 += fragments2[i];
 		}
 		document.getElementById("frag2").value = output2;
+		}
 
+		if(fragments3.length > 0)
+		{
 		let output3 = ">\n"
 		output3 += fragments3[0];
 		for(let i = 1; i < fragments3.length; ++i)
@@ -868,6 +876,7 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 			output3 += fragments3[i];
 		}
 		document.getElementById("frag3").value = output3;
+		}
 
 		if (isDifferentiable(fragments1, fragments2, fragments3)) {
 			differentiatingEnzymes.push(enzymeArray[i]);
