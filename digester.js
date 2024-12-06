@@ -433,6 +433,9 @@ function clearresults(){
 	document.getElementById("frag2").value = "";
 	document.getElementById("frag3").value = "";
 
+	document.getElementById("NoFragmentMessage").setAttribute('style', "display: none;color:red;");
+
+
 	let gelDrawings = document.getElementById("gelDrawings");
 	while(gelDrawings.firstChild){
 		gelDrawings.firstChild.remove()
@@ -842,6 +845,9 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 		if(!noneBigger(fragments2, maxFragmentSize)) continue;
 		if(!noneBigger(fragments3, maxFragmentSize)) continue;
 
+//		if (!isDifferentiable(fragments1, fragments2, fragments3))
+//			continue;
+
 		if(fragments1.length > 0)
 		{
 		let output1 = ">\n"
@@ -878,11 +884,13 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 		document.getElementById("frag3").value = output3;
 		}
 
-		if (isDifferentiable(fragments1, fragments2, fragments3)) {
+		plotFragments(fragments1, fragments2, fragments3, enzymeArray[i]);
 			differentiatingEnzymes.push(enzymeArray[i]);
 		}
 
-		plotFragments(fragments1, fragments2, fragments3, enzymeArray[i]);
+	if(differentiatingEnzymes.length <= 0)
+	{
+		document.getElementById("NoFragmentMessage").setAttribute('style', "display: block;color:red;");
 	}
 
 	return differentiatingEnzymes;
