@@ -444,12 +444,12 @@ function clearresults(){
 	resetListLabels();
 }
 
-function getFastaID(seq){
+function getFastaID(seq, seqID){
 	if(seq.startsWith(">"))
 		// Gives an array of strings, even so this way it only contains one element
-		return seq.match(/^>.*\n/)[0];
+		return seq.match(/^>.*\n/)[0].slice(0, -1);
 	else
-		return "";
+		return ">Seq" + seqID;
 }
 
 function remvoveFastaID(seq){
@@ -482,7 +482,7 @@ function getSequence(seqID){
 	var seq=document.getElementById("seq" + seqID).value;
 
 	var seqObject = new Object();
-	seqObject.id = getFastaID(seq);
+	seqObject.id = getFastaID(seq, seqID);
 
 	seq = remvoveFastaID(seq);
 	seqF = remvoveFurtherFastaSeqs(seq);
@@ -848,40 +848,22 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 //		if (!isDifferentiable(fragments1, fragments2, fragments3))
 //			continue;
 
-		if(fragments1.length > 0)
+		for(let i = 0; i < fragments1.length; ++i)
 		{
-		let output1 = ">\n"
-		output1 += fragments1[0];
-		for(let i = 1; i < fragments1.length; ++i)
-		{
-			output1 += "\n>\n";
-			output1 += fragments1[i];
-		}
-		document.getElementById("frag1").value = output1;
+			document.getElementById("frag1").value += seqObj1.id + "_" + enzymeArray[i].name + "_fragment" + i + "\n";
+			document.getElementById("frag1").value += fragments1[i] + "\n";
 		}
 
-		if(fragments2.length > 0)
+		for(let i = 0; i < fragments2.length; ++i)
 		{
-		let output2 = ">\n"
-		output2 += fragments2[0];
-		for(let i = 1; i < fragments2.length; ++i)
-		{
-			output2 += "\n>\n";
-			output2 += fragments2[i];
-		}
-		document.getElementById("frag2").value = output2;
+			document.getElementById("frag2").value += seqObj2.id + "_" + enzymeArray[i].name + "_fragment" + i + "\n";
+			document.getElementById("frag2").value += fragments2[i] + "\n";
 		}
 
-		if(fragments3.length > 0)
+		for(let i = 0; i < fragments3.length; ++i)
 		{
-		let output3 = ">\n"
-		output3 += fragments3[0];
-		for(let i = 1; i < fragments3.length; ++i)
-		{
-			output3 += "\n>\n";
-			output3 += fragments3[i];
-		}
-		document.getElementById("frag3").value = output3;
+			document.getElementById("frag3").value += seqObj3.id + "_" + enzymeArray[i].name + "_fragment" + i + "\n";
+			document.getElementById("frag3").value += fragments3[i] + "\n";
 		}
 
 		plotFragments(fragments1, fragments2, fragments3, enzymeArray[i]);
