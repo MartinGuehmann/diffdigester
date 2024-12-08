@@ -911,23 +911,15 @@ function isDifferentiable(fragments1, fragments2, fragments3) {
 	return false;
 }
 
-// Example function that generates fragments
-function generateFragments(enzyme, seqObj) {
-
-	let fragments = [];
-	if(seqObj.seq.length == 0)
+function getCutPositions(enzyme, sequence)
 	{
-		return fragments;
-	}
 
 	let matchIndices = [];
 
 	for (let i = 0; i < enzyme.regexfw.length; i++)
 	{
-		console.log(enzyme.regexfw[i], enzyme.cutPosFw[i]);
-		console.log(enzyme.regexrv[i], enzyme.cutPosRv[i]);
-		let matchIndicesFor = Array.from(seqObj.seq.matchAll(enzyme.regexfw[i])).map(x => x.index + enzyme.cutPosFw[i]);
-		let matchIndicesRev = Array.from(seqObj.seq.matchAll(enzyme.regexrv[i])).map(x => x.index + enzyme.cutPosRv[i]);
+		let matchIndicesFor = Array.from(sequence.matchAll(enzyme.regexfw[i])).map(x => x.index + enzyme.cutPosFw[i]);
+		let matchIndicesRev = Array.from(sequence.matchAll(enzyme.regexrv[i])).map(x => x.index + enzyme.cutPosRv[i]);
 
 		matchIndices = matchIndices.concat(matchIndicesFor);
 		matchIndices = matchIndices.concat(matchIndicesRev);
@@ -937,7 +929,24 @@ function generateFragments(enzyme, seqObj) {
 	{
 		matchIndices.sort(function(a, b){return a-b});
 		matchIndices = [...new Set(matchIndices)];
+	}
 
+	return matchIndices;
+}
+
+// Example function that generates fragments
+function generateFragments(enzyme, seqObj) {
+
+	let fragments = [];
+	if(seqObj.seq.length == 0)
+	{
+		return fragments;
+	}
+
+	let matchIndices = getCutPositions(enzyme, seqObj.seq);
+
+	if (matchIndices.length > 0)
+	{
 		if(seqObj.isCircular)
 		{
 			let start1 = 0;
@@ -945,16 +954,45 @@ function generateFragments(enzyme, seqObj) {
 			let part1  = seqObj.seq.slice(start1, end1)
 			let start2 = matchIndices[matchIndices.length-1];
 			let part2  = seqObj.seq.slice(start2)
+			let endStart = part2 + part1;
 
-			//@ToDo: Check for cut in that connected fragment
-			//@ToDo: Check for out of recognition seq cutters.
-			fragments.push(part2 + part1);
+			let matchIndicesEndStart = getCutPositions(enzyme, endStart);
+
+			if (matchIndicesEndStart.length > 0)
+			{
+				let start = 0;
+				let end   = matchIndicesEndStart[0];
+				if(end > 0)
+				{
+					fragments.push(endStart.slice(start, end));
+				}
+
+				for (let i = 0; i < matchIndicesEndStart.length-1; i++)
+				{
+					let start = matchIndicesEndStart[i];
+					let end   = matchIndicesEndStart[i+1];
+					fragments.push(endStart.slice(start, end));
+				}
+
+				start = matchIndicesEndStart[matchIndicesEndStart.length-1];
+				if(endStart.length < start)
+				{
+					fragments.push(endStart.slice(start));
+				}
+			}
+			else
+			{
+				fragments.push(endStart);
+			}
 		}
 		else
 		{
 			let start = 0;
 			let end   = matchIndices[0];
+			if(end > 0)
+			{
 			fragments.push(seqObj.seq.slice(start, end));
+		}
 		}
 
 		for (let i = 0; i < matchIndices.length-1; i++) {
@@ -966,12 +1004,53 @@ function generateFragments(enzyme, seqObj) {
 		if(!seqObj.isCircular)
 		{
 			let start = matchIndices[matchIndices.length-1];
+			if(seqObj.seq.length < start)
+			{
 			fragments.push(seqObj.seq.slice(start));
 		}
 	}
+	}
+	else
+	{
+		if(seqObj.isCircular)
+		{
+			let half = seqObj.seq.length / 2;
+			let part1 = seqObj.seq.slice(0, half);
+			let part2 = seqObj.seq.slice(half);
+			let rotated = part2 + part1;
+			let matchIndicesRotated = getCutPositions(enzyme, rotated);
+
+			if (matchIndicesRotated.length > 0)
+			{
+				let start = 0;
+				let end   = matchIndicesRotated[0];
+				if(end > 0)
+				{
+					fragments.push(rotated.slice(start, end));
+				}
+
+				for (let i = 0; i < matchIndicesRotated.length-1; i++)
+				{
+					let start = matchIndicesRotated[i];
+					let end   = matchIndicesRotated[i+1];
+					fragments.push(rotated.slice(start, end));
+				}
+
+				start = matchIndicesRotated[matchIndicesRotated.length-1];
+				if(rotated.length < start)
+				{
+					fragments.push(rotated.slice(start));
+				}
+			}
+			else
+			{
+				fragments.push(seqObj.seq);
+			}
+		}
 	else
 	{
 		fragments.push(seqObj.seq);
+	}
 	}
 
 	return fragments;
