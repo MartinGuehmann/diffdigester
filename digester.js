@@ -804,9 +804,13 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 
 function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 	clearresults();
-	var enzymesToUse = document.getElementById("EnzymesToUse");
+	let enzymesToUse = document.getElementById("EnzymesToUse");
 
 	let differentiatingEnzymes = [];
+
+	let output1 = "";
+	let output2 = "";
+	let output3 = "";
 
 	for (let i = 0; i < enzymeArray.length; i++)
 	{
@@ -850,25 +854,29 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 
 		for(let i = 0; i < fragments1.length; ++i)
 		{
-			document.getElementById("frag1").value += seqObj1.id + "_" + enzymeArray[i].name + "_fragment" + i + "\n";
-			document.getElementById("frag1").value += fragments1[i] + "\n";
+			output1 += seqObj1.id + "_" + enzymeArray[i].name + "_fragment" + i + "\n";
+			output1 += fragments1[i] + "\n";
 		}
 
 		for(let i = 0; i < fragments2.length; ++i)
 		{
-			document.getElementById("frag2").value += seqObj2.id + "_" + enzymeArray[i].name + "_fragment" + i + "\n";
-			document.getElementById("frag2").value += fragments2[i] + "\n";
+			output2 += seqObj2.id + "_" + enzymeArray[i].name + "_fragment" + i + "\n";
+			output2 += fragments2[i] + "\n";
 		}
 
 		for(let i = 0; i < fragments3.length; ++i)
 		{
-			document.getElementById("frag3").value += seqObj3.id + "_" + enzymeArray[i].name + "_fragment" + i + "\n";
-			document.getElementById("frag3").value += fragments3[i] + "\n";
+			output3 += seqObj3.id + "_" + enzymeArray[i].name + "_fragment" + i + "\n";
+			output3 += fragments3[i] + "\n";
 		}
 
 		plotFragments(fragments1, fragments2, fragments3, enzymeArray[i]);
 			differentiatingEnzymes.push(enzymeArray[i]);
 		}
+
+	document.getElementById("frag1").value += output1;
+	document.getElementById("frag2").value += output2;
+	document.getElementById("frag3").value += output3;
 
 	if(differentiatingEnzymes.length <= 0)
 	{
