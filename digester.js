@@ -73,21 +73,6 @@ for (i = 0; i < enzymeentry.length; i++)
 window.onload=function()
 {
 	initEnzymeLists();
-	resetListLabels();
-}
-
-function resetListLabels()
-{
-	document.getElementById("cutinseq1notin3Label").innerHTML = cutinseq1notin3Label + ":";
-	document.getElementById("cutinseq2notin3Label").innerHTML = cutinseq2notin3Label + ":";
-
-	document.getElementById("cutinseq1Label").innerHTML = cutinseq1Label + ":";
-	document.getElementById("cutinseq2Label").innerHTML = cutinseq2Label + ":";
-	document.getElementById("cutinseq3Label").innerHTML = cutinseq3Label + ":";
-
-	document.getElementById("nocutinseq1Label").innerHTML = nocutinseq1Label + ":";
-	document.getElementById("nocutinseq2Label").innerHTML = nocutinseq2Label + ":";
-	document.getElementById("nocutinseq3Label").innerHTML = nocutinseq3Label + ":";
 }
 
 function initEnzymeLists()
@@ -417,27 +402,17 @@ function onChangeLoadSequences()
 	reader.readAsText(sequenceFile);
 }
 
-function clearresults(){
-	document.getElementById("cutinseq1").innerHTML ='';
-	document.getElementById("cutinseq2").innerHTML = '';
-	document.getElementById("cutinseq3").innerHTML = '';
-	document.getElementById("cutinseq1notin3").innerHTML = '';
-	document.getElementById("cutinseq2notin3").innerHTML = '';
-	document.getElementById("nocutinseq1").innerHTML ='';
-	document.getElementById("nocutinseq2").innerHTML = '';
-	document.getElementById("nocutinseq3").innerHTML = '';
-
+function clearresults()
+{
 	document.getElementById("fileWarning").innerHTML = "";
 
 	document.getElementById("NoFragmentMessage").setAttribute('style', "display: none;color:red;");
 
-
 	let gelDrawings = document.getElementById("gelDrawings");
-	while(gelDrawings.firstChild){
+	while(gelDrawings.firstChild)
+	{
 		gelDrawings.firstChild.remove()
 	}
-
-	resetListLabels();
 }
 
 function getFastaID(seq, seqID){
@@ -539,23 +514,7 @@ function getRecSitesText(recSites)
 }
 
 function myFunction() {
-	var seq1, seq2, seq3, checkseq, text1='', text2 = '', text3='',
-		notext1='', notext2 = '', notext3='',text13='',text23 ='' ,
-		nfw1,nrv1,nfw2,nrv2,nfw3,nrv3,
-		commenttext='Info: ';
-
-	var allSeqsNum = 0;
-
-	var seq1CutNum = 0;
-	var seq2CutNum = 0;
-	var seq3CutNum = 0;
-
-	var seq1NoCutNum = 0;
-	var seq2NoCutNum = 0;
-	var seq3NoCutNum = 0;
-
-	var seq13CutNum = 0;
-	var seq23CutNum = 0;
+	let	commenttext='Info: ';
 
 	document.getElementById("fileWarning").innerHTML = "";
 
@@ -568,96 +527,7 @@ function myFunction() {
 	seq2 = seqObj2.circSeq;
 	seq3 = seqObj3.circSeq;
 	let differentiatingEnzymes = findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3);
-//	console.log("Enzymes that can differentiate the plasmids:", differentiatingEnzymes);
-
-	var enzymesToUse = document.getElementById("EnzymesToUse");
-
-	for (var i = 0; i < enzymeArray.length; i++)
-	{
-		if(enzymesToUse.namedItem(enzymeArray[i].name) == null)
-		{
-			continue;
-		}
-
-		allSeqsNum++;
-
-		nfw1=testforcut(seq1, enzymeArray[i].regexfw);
-		nrv1=testforcut(seq1, enzymeArray[i].regexrv);
-		nfw2=testforcut(seq2, enzymeArray[i].regexfw);
-		nrv2=testforcut(seq2, enzymeArray[i].regexrv);
-		nfw3=testforcut(seq3, enzymeArray[i].regexfw);
-		nrv3=testforcut(seq3, enzymeArray[i].regexrv);
-
-		n1=nfw1+nrv1
-		if(n1 >-2 ){
-			seq1CutNum++;
-			text1 += makeCutText(enzymeArray[i], seq1);
-		}else{
-			seq1NoCutNum++;
-			notext1 += makeCutNonText(enzymeArray[i]);
-		}
-
-		n2=nfw2+nrv2
-		if(n2 >-2 ){
-			seq2CutNum++;
-			text2 += makeCutText(enzymeArray[i], seq2);
-		}else{
-			seq2NoCutNum++;
-			notext2 += makeCutNonText(enzymeArray[i]);
-		}
-
-		n3=nfw3+nrv3
-		if(n3 >-2 ){
-			seq3CutNum++;
-			text3 += makeCutText(enzymeArray[i], seq3);
-		}else{
-			seq3NoCutNum++;
-			notext3 += makeCutNonText(enzymeArray[i]);
-		}
-
-		if((n1>-2)&&(n3==-2)){
-			seq13CutNum++;
-			text13 += makeCutText(enzymeArray[i], seq1);
-		}
-
-		if((n2>-2)&&(n3==-2)){
-			seq23CutNum++;
-			text23 += makeCutText(enzymeArray[i], seq2);
-		}
-	}
-
-	document.getElementById("cutinseq1").innerHTML = text1;
-	document.getElementById("cutinseq2").innerHTML = text2;
-	document.getElementById("cutinseq3").innerHTML = text3;
-
-	if(seq3.length>1){
-		document.getElementById("cutinseq1notin3").innerHTML = text13;
-		document.getElementById("cutinseq2notin3").innerHTML = text23;
-	}
-	else{
-		document.getElementById("cutinseq1notin3").innerHTML = '';
-		document.getElementById("cutinseq2notin3").innerHTML = '';
-	}
-
-	if(seq1.length>1){document.getElementById("nocutinseq1").innerHTML = notext1;} else document.getElementById("nocutinseq1").innerHTML = '';
-	if(seq2.length>1){document.getElementById("nocutinseq2").innerHTML = notext2;} else document.getElementById("nocutinseq2").innerHTML = '';
-	if(seq3.length>1){document.getElementById("nocutinseq3").innerHTML = notext3;} else document.getElementById("nocutinseq3").innerHTML = '';
-
-	document.getElementById("cutinseq1notin3Label").innerHTML = cutinseq1notin3Label + " (" + seq13CutNum + " of " + allSeqsNum + " selected enzymes):";
-	document.getElementById("cutinseq2notin3Label").innerHTML = cutinseq2notin3Label + " (" + seq23CutNum + " of " + allSeqsNum + " selected enzymes):";
-
-	document.getElementById("cutinseq1Label").innerHTML = cutinseq1Label + " (" + seq1CutNum + " of " + allSeqsNum + " selected enzymes):";
-	document.getElementById("cutinseq2Label").innerHTML = cutinseq2Label + " (" + seq2CutNum + " of " + allSeqsNum + " selected enzymes):";
-	document.getElementById("cutinseq3Label").innerHTML = cutinseq3Label + " (" + seq3CutNum + " of " + allSeqsNum + " selected enzymes):";
-
-	document.getElementById("nocutinseq1Label").innerHTML = nocutinseq1Label + " (" + seq1NoCutNum + " of " + allSeqsNum + " selected enzymes):";
-	document.getElementById("nocutinseq2Label").innerHTML = nocutinseq2Label + " (" + seq2NoCutNum + " of " + allSeqsNum + " selected enzymes):";
-	document.getElementById("nocutinseq3Label").innerHTML = nocutinseq3Label + " (" + seq3NoCutNum + " of " + allSeqsNum + " selected enzymes):";
 }
-
-
-// Assuming enzymeList is an array of enzyme names
-// and generateFragments is a function that takes enzyme and plasmid sequence and returns fragment lengths
 
 function getMaxLength(fragments)
 {
