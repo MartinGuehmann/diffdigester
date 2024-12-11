@@ -561,13 +561,14 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 		maxLength = maxLadder;
 	maxLength = Math.round(Math.log(maxLength) * scaleFactor);
 
-	const padding     = 50;
-	const margin      = 25;
-	const marginSizes = 50;
-	const bandLength  = 50;
-	let   gelWidth    = marginSizes + 4*bandLength + 5*margin;
-	let   gelHeight   = maxLength + 2*padding;
-	let gelDrawing = document.createElementNS('http://www.w3.org/2000/svg','svg');
+	const padding        = 50;
+	const margin         = 25;
+	const marginSizes    = 50;
+	const bandLength     = 50;
+	const sizeLabelRight = 45;
+	let   gelWidth       = marginSizes + 4*bandLength + 5*margin;
+	let   gelHeight      = maxLength + 2*padding;
+	let gelDrawing       = document.createElementNS('http://www.w3.org/2000/svg','svg');
 	gelDrawing.setAttribute('id', 'Gel-' + enzyme.name);
 	gelDrawing.setAttribute('width', gelWidth);
 	gelDrawing.setAttribute('height', gelHeight);
@@ -675,7 +676,7 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 		let length = Math.round(Math.log(ladder[i]) * scaleFactor);
 		let pos = maxLength - length + padding;
 
-		size.setAttribute('x', 2);
+		size.setAttribute('x', sizeLabelRight - bbox.width);
 		size.setAttribute('y', pos + bbox.height/4);
 	}
 }
