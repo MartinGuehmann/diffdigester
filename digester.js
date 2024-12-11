@@ -555,11 +555,13 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	const ladder      = [   10,    50,   100,   200,   300,   400,  500,   600,   700,   800,   900, 1000,  1200,  1500,  2000,  2500,  3000,  3500,  4000,  5000,  6000,  8000, 10000]
 	const bold        = [false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false,  true, false, false, false, false, false, false]
 	const scaleFactor = 100;
+	let   gelBottom   = document.getElementById("gelBottom").value;
 	let maxLadder = ladder[ladder.length-1];
 	let maxLength = getMaxLength2(fragments1, fragments2, fragments3);
 	if (maxLength < maxLadder)
 		maxLength = maxLadder;
-	maxLength = Math.round(Math.log(maxLength) * scaleFactor);
+	maxLength    = Math.round(Math.log(maxLength) * scaleFactor);
+	let gelBottomLog = Math.round(Math.log(gelBottom) * scaleFactor);
 
 	const padding        = 50;
 	const margin         = 25;
@@ -567,7 +569,7 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	const bandLength     = 50;
 	const sizeLabelRight = 45;
 	let   gelWidth       = marginSizes + 4*bandLength + 5*margin;
-	let   gelHeight      = maxLength + 2*padding;
+	let   gelHeight      = maxLength + 2*padding - gelBottomLog;
 	let gelDrawing       = document.createElementNS('http://www.w3.org/2000/svg','svg');
 	gelDrawing.setAttribute('id', 'Gel-' + enzyme.name);
 	gelDrawing.setAttribute('width', gelWidth);
@@ -584,6 +586,9 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	let leftPos = margin + marginSizes;
 	for (let i = 0; i < ladder.length; i++)
 	{
+		if(ladder[i] < gelBottom)
+			continue;
+
 		let width = "3";
 		if(bold[i])
 		{
@@ -605,6 +610,9 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	leftPos += margin;
 	for (let i = 0; i < fragments1.length; i++)
 	{
+		if(fragments1[i].length < gelBottom)
+			continue;
+
 		let length = Math.round(Math.log(fragments1[i].length) * scaleFactor);
 		let pos = maxLength - length + padding;
 		var gelBand = document.createElementNS('http://www.w3.org/2000/svg','line');
@@ -620,6 +628,9 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	leftPos += margin;
 	for (let i = 0; i < fragments2.length; i++)
 	{
+		if(fragments2[i].length < gelBottom)
+			continue;
+
 		let length = Math.round(Math.log(fragments2[i].length) * scaleFactor);
 		let pos = maxLength - length + padding;
 		var gelBand = document.createElementNS('http://www.w3.org/2000/svg','line');
@@ -635,6 +646,9 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	leftPos += margin;
 	for (let i = 0; i < fragments3.length; i++)
 	{
+		if(fragments3[i].length < gelBottom)
+			continue;
+
 		let length = Math.round(Math.log(fragments3[i].length) * scaleFactor);
 		let pos = maxLength - length + padding;
 		var gelBand = document.createElementNS('http://www.w3.org/2000/svg','line');
@@ -662,6 +676,9 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 
 	for(let i = 0; i < ladder.length; ++i)
 	{
+		if(ladder[i] < gelBottom)
+			continue;
+
 		let size = document.createElementNS('http://www.w3.org/2000/svg','text');
 		size.textContent = ladder[i];
 		size.setAttribute('fill', 'black');
