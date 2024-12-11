@@ -552,8 +552,9 @@ function getMaxLength2(fragments1, fragments2, fragments3)
 
 function plotFragments(fragments1, fragments2, fragments3, enzyme)
 {
-	const ladder      = [10, 50, 100, 200, 300, 500, 1000, 1500, 2000, 3000, 5000]
-	const scaleFactor = 50;
+	const ladder      = [   10,    50,   100,   200,   300,   400,  500,   600,   700,   800,   900, 1000,  1200,  1500,  2000,  2500,  3000,  3500,  4000,  5000,  6000,  8000, 10000]
+	const bold        = [false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false,  true, false, false, false, false, false, false]
+	const scaleFactor = 100;
 	let maxLadder = ladder[ladder.length-1];
 	let maxLength = getMaxLength2(fragments1, fragments2, fragments3);
 	if (maxLength < maxLadder)
@@ -582,10 +583,16 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	let leftPos = margin + marginSizes;
 	for (let i = 0; i < ladder.length; i++)
 	{
+		let width = "3";
+		if(bold[i])
+		{
+			width = "7"
+		}
+
 		let length = Math.round(Math.log(ladder[i]) * scaleFactor);
 		let pos = maxLength - length + padding;
 		var gelBand = document.createElementNS('http://www.w3.org/2000/svg','line');
-		gelBand.setAttribute('style', "stroke-width:3;stroke:black");
+		gelBand.setAttribute('style', "stroke-width:" + width + ";stroke:black");
 		gelBand.setAttribute('x1', leftPos);
 		gelBand.setAttribute('y1', pos);
 		gelBand.setAttribute('x2', leftPos + bandLength);
@@ -715,8 +722,8 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 //			continue;
 
 		plotFragments(fragments1, fragments2, fragments3, enzymeArray[i]);
-			differentiatingEnzymes.push(enzymeArray[i]);
-		}
+		differentiatingEnzymes.push(enzymeArray[i]);
+	}
 
 	if(differentiatingEnzymes.length <= 0)
 	{
@@ -760,7 +767,7 @@ function isDifferentiable(fragments1, fragments2, fragments3) {
 }
 
 function getCutPositions(enzyme, sequence)
-	{
+{
 
 	let matchIndices = [];
 
@@ -797,11 +804,11 @@ function generateFragments(enzyme, seqObj) {
 	{
 		if(seqObj.isCircular)
 		{
-			let start1 = 0;
-			let end1   = matchIndices[0];
-			let part1  = seqObj.seq.slice(start1, end1)
-			let start2 = matchIndices[matchIndices.length-1];
-			let part2  = seqObj.seq.slice(start2)
+			let start1   = 0;
+			let end1     = matchIndices[0];
+			let part1    = seqObj.seq.slice(start1, end1)
+			let start2   = matchIndices[matchIndices.length-1];
+			let part2    = seqObj.seq.slice(start2)
 			let endStart = part2 + part1;
 
 			let matchIndicesEndStart = getCutPositions(enzyme, endStart);
@@ -839,8 +846,8 @@ function generateFragments(enzyme, seqObj) {
 			let end   = matchIndices[0];
 			if(end > 0)
 			{
-			fragments.push(seqObj.seq.slice(start, end));
-		}
+				fragments.push(seqObj.seq.slice(start, end));
+			}
 		}
 
 		for (let i = 0; i < matchIndices.length-1; i++) {
@@ -854,9 +861,9 @@ function generateFragments(enzyme, seqObj) {
 			let start = matchIndices[matchIndices.length-1];
 			if(seqObj.seq.length < start)
 			{
-			fragments.push(seqObj.seq.slice(start));
+				fragments.push(seqObj.seq.slice(start));
+			}
 		}
-	}
 	}
 	else
 	{
@@ -895,10 +902,10 @@ function generateFragments(enzyme, seqObj) {
 				fragments.push(seqObj.seq);
 			}
 		}
-	else
-	{
-		fragments.push(seqObj.seq);
-	}
+		else
+		{
+			fragments.push(seqObj.seq);
+		}
 	}
 
 	return fragments;
