@@ -663,9 +663,14 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	{
 		let size = document.createElementNS('http://www.w3.org/2000/svg','text');
 		size.textContent = ladder[i];
+		size.setAttribute('fill', 'black');
+		if(bold[i])
+		{
+			size.setAttribute('font-weight', 'bold');
+		}
+
 		gelDrawing.appendChild(size);
-		enzymeName.setAttribute('fill', 'black');
-		let bbox = enzymeName.getBBox();
+		let bbox = size.getBBox();
 
 		let length = Math.round(Math.log(ladder[i]) * scaleFactor);
 		let pos = maxLength - length + padding;
