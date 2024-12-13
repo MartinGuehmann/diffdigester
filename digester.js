@@ -561,7 +561,11 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	if (maxLength < maxLadder)
 		maxLength = maxLadder;
 	maxLength    = Math.round(Math.log(maxLength) * scaleFactor);
-	let gelBottomLog = Math.round(Math.log(gelBottom) * scaleFactor);
+	let gelBottomLog = 0;
+	if(gelBottom > 1)
+	{
+		gelBottomLog = Math.round(Math.log(gelBottom) * scaleFactor);
+	}
 
 	const padding        = 50;
 	const margin         = 25;
