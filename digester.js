@@ -720,17 +720,17 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 		let fragments3 = generateFragments(enzymeArray[i], seqObj3);
 
 		let minFragments    = document.getElementById("minFragments").value;
-		if (minFragments > fragments1.length
-		||  minFragments > fragments2.length
-		||  minFragments > fragments3.length
+		if (minFragments > fragments1.length && seqObj1.seq.length > 0
+		||  minFragments > fragments2.length && seqObj2.seq.length > 0
+		||  minFragments > fragments3.length && seqObj3.seq.length > 0
 		){
 			continue;
 		}
 
 		let maxFragments    = document.getElementById("maxFragments").value;
-		if (maxFragments < fragments1.length
-		||  maxFragments < fragments2.length
-		||  maxFragments < fragments3.length
+		if (maxFragments < fragments1.length && seqObj1.seq.length > 0
+		||  maxFragments < fragments2.length && seqObj2.seq.length > 0
+		||  maxFragments < fragments3.length && seqObj3.seq.length > 0
 		){
 			continue;
 		}
