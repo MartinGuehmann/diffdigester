@@ -13,7 +13,7 @@ var nocutinseq3Label = "no cut in Sequence 3";
 
 for (i = 0; i < enzymeentry.length; i++)
 {
-	var rawEntry = enzymeentry[i].split('\t');
+	let rawEntry = enzymeentry[i].split('\t');
 
 	if(!enzymeArray.some(enzyme => enzyme.name === rawEntry[0]))
 	{
@@ -48,7 +48,7 @@ for (i = 0; i < enzymeentry.length; i++)
 	}
 	else
 	{
-		var newIndex = enzyme.recognition.length;
+		let newIndex = enzyme.recognition.length;
 		enzyme.recognition[newIndex] = rawEntry[1];;
 
 		cleanRecognition = clean(enzyme.recognition[newIndex]);
@@ -748,8 +748,50 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 //		if (!isDifferentiable(fragments1, fragments2, fragments3))
 //			continue;
 
-		plotFragments(fragments1, fragments2, fragments3, enzymeArray[i]);
-		differentiatingEnzymes.push(enzymeArray[i]);
+		let enzymeResults = new Object();
+		enzymeResults.enzyme = enzymeArray[i];
+		enzymeResults.fragments1 = fragments1;
+		enzymeResults.fragments2 = fragments2;
+		enzymeResults.fragments3 = fragments3;
+		enzymeResults.distance = calcDistance3(fragments1, fragments2, fragments3);
+		differentiatingEnzymes.push(enzymeResults);
+	}
+
+	if(document.getElementById("alphabetical_A-Z").checked)
+	{
+		for(let i = 0; i < differentiatingEnzymes.length; i++)
+		{
+			let enzymeResults = differentiatingEnzymes[i];
+			plotFragments(enzymeResults.fragments1, enzymeResults.fragments2, enzymeResults.fragments3, enzymeResults.enzyme);
+		}
+	}
+	else if(document.getElementById("alphabetical_Z-A").checked)
+	{
+		for(let i = differentiatingEnzymes.length-1; i >= 0 ; i--)
+		{
+			let enzymeResults = differentiatingEnzymes[i];
+			plotFragments(enzymeResults.fragments1, enzymeResults.fragments2, enzymeResults.fragments3, enzymeResults.enzyme);
+		}
+	}
+	else if(document.getElementById("patternUnsimilarity").checked)
+	{
+		differentiatingEnzymes.sort(function(a, b){return b.distance-a.distance});
+		for(let i = 0; i < differentiatingEnzymes.length; i++)
+		{
+			let enzymeResults = differentiatingEnzymes[i];
+			console.log(enzymeResults);
+			plotFragments(enzymeResults.fragments1, enzymeResults.fragments2, enzymeResults.fragments3, enzymeResults.enzyme);
+		}
+	}
+	else if(document.getElementById("patternSimilarity").checked)
+	{
+		differentiatingEnzymes.sort(function(a, b){return a.distance-b.distance});
+		for(let i = 0; i < differentiatingEnzymes.length; i++)
+		{
+			let enzymeResults = differentiatingEnzymes[i];
+			console.log(enzymeResults);
+			plotFragments(enzymeResults.fragments1, enzymeResults.fragments2, enzymeResults.fragments3, enzymeResults.enzyme);
+		}
 	}
 
 	if(differentiatingEnzymes.length <= 0)
@@ -758,6 +800,65 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 	}
 
 	return differentiatingEnzymes;
+}
+
+function calcDistance3(fragments1, fragments2, fragments3)
+{
+	let sum = 0;
+	let num = 0;
+
+	if(fragments1.length > 0)
+	{
+		sum += calcDistance(fragments1);
+		num++;
+	}
+
+	if(fragments2.length > 0)
+	{
+		sum += calcDistance(fragments2);
+		num++;
+	}
+
+	if(fragments3.length > 0)
+	{
+		sum += calcDistance(fragments3);
+		num++;
+	}
+
+	if(num > 0)
+	{
+		return sum/num;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+function calcDistance(fragments)
+{
+	let sum = 0;
+	let num = 0;
+	// Calculate the pairwise distances
+	// The distance to itself is zero, but we don't need this
+	// Only the one triangle of the matrix is needed
+	for(let i = 0; i < fragments.length; ++i)
+	{
+		for(let j = 0; j < i; ++j)
+		{
+			sum += Math.abs(Math.log(fragments[i].length) - Math.log(fragments[j].length));
+			num++;
+		}
+	}
+
+	if(num > 0)
+	{
+		return sum/num;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 function noneBigger(fragments, maxValue)
@@ -816,7 +917,6 @@ function getCutPositions(enzyme, sequence)
 	return matchIndices;
 }
 
-// Example function that generates fragments
 function generateFragments(enzyme, seqObj) {
 
 	let fragments = [];

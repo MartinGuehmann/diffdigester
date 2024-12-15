@@ -539,7 +539,7 @@
 				<button class="button button2" onclick="loadSequence('seq1')" title="Load sequence from a file.">Load sequence...</button>
 				<button class="button button2" onclick="setseq('seq1',sampleseq1)" title="Load the sequence of the recipient plasmid of example 1 from the example section.">Load example</button>
 				<button id="clear1" class="button button3" onclick="clearseq('seq1')" title="Clear the current sequence and the result columns.">Clear</button>
-				<label for="circular1" title="Check if the provided sequence is circular.">circular: </label><input id="circular1" checked="checked" type="checkbox" title="Check if the provided sequence is circular.">
+				<label for="circular1" title="Check if the provided sequence is circular.">circular: </label><input id="circular1" checked="checked" type="checkbox" title="Check if the provided sequence is circular." />
 			</div>
 		</div><br>
 
@@ -551,7 +551,7 @@
 				<button class="button button2" onclick="loadSequence('seq2')" title="Load sequence from a file.">Load sequence...</button>
 				<button class="button button2" onclick="setseq('seq2',sampleseq2)" title="Load the sequence of the final plasmid of example 1 from the example section.">Load example</button>
 				<button id="clear2" class="button button3" onclick="clearseq('seq2')" title="Clear the current sequence and the result columns.">Clear</button>
-				<label for="circular2" title="Check if the provided sequence is circular.">circular: </label><input id="circular2" checked="checked" type="checkbox" title="Check if the provided sequence is circular.">
+				<label for="circular2" title="Check if the provided sequence is circular.">circular: </label><input id="circular2" checked="checked" type="checkbox" title="Check if the provided sequence is circular." />
 			</div>
 		</div><br>
 
@@ -563,7 +563,7 @@
 				<button class="button button2" onclick="loadSequence('seq3')" title="Load sequence from a file.">Load sequence...</button>
 				<button class="button button2" onclick="setseq('seq3',sampleseq3)" title="Load the sequence of the donor plasmid of example 1 from the example section.">Load example</button>
 				<button id="clear3" class="button button3" onclick="clearseq('seq3')" title="Clear the current sequence and the result columns.">Clear</button>
-				<label for="circular3" title="Check if the provided sequence is circular.">circular: </label><input id="circular3" checked="checked" type="checkbox" title="Check if the provided sequence is circular.">
+				<label for="circular3" title="Check if the provided sequence is circular.">circular: </label><input id="circular3" checked="checked" type="checkbox" title="Check if the provided sequence is circular." />
 			</div>
 		</div><br>
 
@@ -575,7 +575,7 @@
 							<label for="minFragments" title="Only show enzymes that cut each sequence at least into so many fragments.">Minimum number of fragments: </label>
 						</td>
 						<td style="horizontal-align: top; border:none;">
-							<input id="minFragments" value="2" min="0" type="number" title="Only show enzymes that cut each sequence at least into so many fragments.">
+							<input id="minFragments" value="2" min="0" type="number" title="Only show enzymes that cut each sequence at least into so many fragments." />
 						</td>
 					<tr/>
 					<tr>
@@ -583,7 +583,7 @@
 							<label for="maxFragments" title="Only show enzymes that cut each sequence at most into so many fragments.">Maximum number of fragments: </label>
 						</td>
 						<td style="horizontal-align: top; border:none;">
-							<input id="maxFragments" value="10" min="0" type="number" title="Only show enzymes that cut each sequence at most into so many fragments.">
+							<input id="maxFragments" value="10" min="0" type="number" title="Only show enzymes that cut each sequence at most into so many fragments." />
 						</td>
 					<tr/>
 					<tr>
@@ -591,7 +591,7 @@
 							<label for="minFragmentSize" title="Only show enzymes that produce fragments bigger than that or equal.">Minimum fragment size (in bp): </label>
 						</td>
 						<td style="horizontal-align: top; border:none;">
-							<input id="minFragmentSize" value="25" min="0" type="number" title="Only show enzymes that produce fragments bigger than that or equal.">
+							<input id="minFragmentSize" value="25" min="0" type="number" title="Only show enzymes that produce fragments bigger than that or equal." />
 						</td>
 					<tr/>
 					<tr>
@@ -599,7 +599,7 @@
 							<label for="maxFragmentSize" title="Only show enzymes that produce fragments smaller than that or equal.">Maximum fragment size (in bp): </label>
 						</td>
 						<td style="horizontal-align: top; border:none;">
-							<input id="maxFragmentSize" value="10000" min="0" type="number" title="Only show enzymes that produce fragments smaller than that or equal.">
+							<input id="maxFragmentSize" value="10000" min="0" type="number" title="Only show enzymes that produce fragments smaller than that or equal." />
 						</td>
 					<tr/>
 					<tr>
@@ -607,7 +607,47 @@
 							<label for="gelBottom" title="Cut off the gel at fragment size smaller than this. This correspondents to fragments that have run through the gel and left it at the bottom. This option saves space on the page.">Minimum fragment size on gel (in bp): </label>
 						</td>
 						<td style="horizontal-align: top; border:none;">
-							<input id="gelBottom" value="50" min="0" type="number" title="Cut off the gel at fragment size smaller than this. This correspondents to fragments that have run through the gel and left it at the bottom. This option saves space on the page.">
+							<input id="gelBottom" value="50" min="0" type="number" title="Cut off the gel at fragment size smaller than this. This correspondents to fragments that have run through the gel and left it at the bottom. This option saves space on the page." />
+						</td>
+					<tr/>
+				</tbody>
+			</table>
+		</dif><br>
+
+		<div>
+			<div class="h2">Sort Order</div>
+			<table style="text-align: left; border:none;" cellpadding="2" cellspacing="2">
+				<tbody>
+					<tr>
+						<td style="vertical-align: top; border:none;">
+							<input id="alphabetical_A-Z" value="0" name="SortOrder" type="radio" checked title="Sort the output by enzyme name in alphabetical order (A - Z)." />
+						</td>
+						<td style="horizontal-align: top; border:none;">
+							<label for="alphabetical_A-Z" title="Sort the output by enzyme name in alphabetical order (A - Z).">Alphabetical (A - Z)</label>
+						</td>
+					<tr/>
+					<tr>
+						<td style="vertical-align: top; border:none;">
+							<input id="alphabetical_Z-A" value="1" name="SortOrder" type="radio" title="Sort the output by enzyme name in reverse alphabetical order (Z - A)." />
+						</td>
+						<td style="horizontal-align: top; border:none;">
+							<label for="alphabetical_Z-A" title="Sort the output by enzyme name in reverse alphabetical order (Z - A).">Reverse alphabetical (Z - A)</label>
+						</td>
+					<tr/>
+					<tr>
+						<td style="vertical-align: top; border:none;">
+							<input id="patternUnsimilarity" value="2" name="SortOrder" type="radio" title="Sort the output by enzyme band pattern unsimilarity (most unsimular first)." />
+						</td>
+						<td style="horizontal-align: top; border:none;">
+							<label for="patternUnsimilarity" title="Sort the output by enzyme band pattern unsimilarity (most unsimular first).">By Unsimilarity</label>
+						</td>
+					<tr/>
+					<tr>
+						<td style="vertical-align: top; border:none;">
+							<input id="patternSimilarity" value="3" name="SortOrder" type="radio" title="Sort the output by enzyme band pattern similarity (most simular first)." />
+						</td>
+						<td style="horizontal-align: top; border:none;">
+							<label for="patternSimilarity" title="Sort the output by enzyme band pattern similarity (most simular first).">By Similarity</label>
 						</td>
 					<tr/>
 				</tbody>
