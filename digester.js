@@ -459,7 +459,14 @@ function getSequence(seqID){
 	seqF = remvoveFurtherFastaSeqs(seq);
 	var fRemoved=(seq.length!=seqF.length);
 	seq = tidydna(seqF);
+	if(seqID < 3)
+	{
 	commenttext = commenttext + "Sequence " + seqID + ": " + seq.length.toString().bold() + " chars, ";
+	}
+	else
+	{
+		commenttext = commenttext + "Sequence " + seqID + ": " + seq.length.toString().bold() + " chars.";
+	}
 
 	var checkseq=tidydnaATCG(seq);
 
