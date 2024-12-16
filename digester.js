@@ -407,6 +407,7 @@ function clearresults()
 	document.getElementById("fileWarning").innerHTML = "";
 
 	document.getElementById("NoFragmentMessage").setAttribute('style', "display: none;color:red;");
+	document.getElementById("ColorLegend").setAttribute('style', "display: none;");
 
 	let gelDrawings = document.getElementById("gelDrawings");
 	while(gelDrawings.firstChild)
@@ -461,7 +462,7 @@ function getSequence(seqID){
 	seq = tidydna(seqF);
 	if(seqID < 3)
 	{
-	commenttext = commenttext + "Sequence " + seqID + ": " + seq.length.toString().bold() + " chars, ";
+		commenttext = commenttext + "Sequence " + seqID + ": " + seq.length.toString().bold() + " chars, ";
 	}
 	else
 	{
@@ -804,6 +805,10 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 	if(differentiatingEnzymes.length <= 0)
 	{
 		document.getElementById("NoFragmentMessage").setAttribute('style', "display: block;color:red;");
+	}
+	else
+	{
+		document.getElementById("ColorLegend").setAttribute('style', "display: block;");
 	}
 
 	return differentiatingEnzymes;
