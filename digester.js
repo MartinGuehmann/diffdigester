@@ -596,7 +596,7 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 		let width = "3";
 		if(bold[i])
 		{
-			width = "7"
+			width = "6"
 		}
 
 		let length = Math.round(Math.log(ladder[i]) * scaleFactor);
