@@ -523,12 +523,10 @@ function getRecSitesText(recSites)
 	return recSiteText;
 }
 
-function myFunction() {
-	let	commenttext='Info: ';
+function myFunction()
+{
+	clearresults();
 
-	document.getElementById("fileWarning").innerHTML = "";
-
-	document.getElementById("commenton").innerHTML = commenttext;
 	seqObj1=getSequence("1");
 	seqObj2=getSequence("2");
 	seqObj3=getSequence("3");
@@ -712,8 +710,8 @@ function plotFragments(fragments1, fragments2, fragments3, enzyme)
 	}
 }
 
-function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
-	clearresults();
+function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3)
+{
 	let enzymesToUse = document.getElementById("EnzymesToUse");
 
 	let differentiatingEnzymes = [];
@@ -789,7 +787,6 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 		for(let i = 0; i < differentiatingEnzymes.length; i++)
 		{
 			let enzymeResults = differentiatingEnzymes[i];
-			console.log(enzymeResults);
 			plotFragments(enzymeResults.fragments1, enzymeResults.fragments2, enzymeResults.fragments3, enzymeResults.enzyme);
 		}
 	}
@@ -799,7 +796,6 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 		for(let i = 0; i < differentiatingEnzymes.length; i++)
 		{
 			let enzymeResults = differentiatingEnzymes[i];
-			console.log(enzymeResults);
 			plotFragments(enzymeResults.fragments1, enzymeResults.fragments2, enzymeResults.fragments3, enzymeResults.enzyme);
 		}
 	}
