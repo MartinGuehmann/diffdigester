@@ -404,6 +404,8 @@ function onChangeLoadSequences()
 
 function clearresults()
 {
+	document.getElementById("commenton").innerHTML = "Info: ";
+
 	document.getElementById("fileWarning").innerHTML = "";
 
 	document.getElementById("NoFragmentMessage").setAttribute('style', "display: none;color:red;");
