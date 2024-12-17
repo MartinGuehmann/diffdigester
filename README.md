@@ -1,9 +1,9 @@
-# Preselector.uni-jena.de
+# diffdigester.uni-jena.de
 
-Preselection digests are a common strategy to reduce the background in the ligation step of molecular cloning. However, choosing fitting restriction enzymes by hand is not trivial and may lead to errors, potentially costing a lot of time and work. Preselector.uni-jena.de (https://preselector.uni-jena.de/) is a free online tool to find such restriction enzymes. It uses regular expressions to find recognition sites of restriction enzymes in the DNA sequences provided by the user. This tool compares the sets of restriction sites and reports the enzymes that cut one sequence but not the other sequences to the user. These enzymes are then the ones suitable for a preselection digest. Thus, preselector.uni-jena.de is a fast, reliable, and free-to-use tool to help researchers designing preselection digestion strategies for their cloning.
+Digestion is an method to check fast the identity of an DNA sequence in a plasmid and to distinguish different plasmids.  However, choosing fitting restriction enzymes by hand is not trivial and may lead to errors, potentially costing a lot of time and work. Diffdigester.uni-jena.de (https://diffdigester.uni-jena.de/) is a free online tool to find such restriction enzymes. It uses regular expressions to find recognition sites of restriction enzymes in the DNA sequences provided by the user. This tool compares the sets of restriction sites and reports the enzymes that give the mist distinctve restriction patterns. Thus, diffdigester.uni-jena.de is a fast, reliable, and free-to-use tool to help researchers designing digestion strategies for checking their clones in a cloning effort.
 
 # Citing
 
-If you find preselector.uni-jena.de useful please cite:
+If you find diffdigetser.uni-jena.de useful please cite:
 
-Martin Gühmann, Stefanie Reuter, Jan Hartung, Ralf Mrowka, Preselector.uni-jena.de: optimize your cloning—a resource for identifying restriction enzymes for preselection reactions, Nucleic Acids Research, 2021;, gkab406, https://doi.org/10.1093/nar/gkab406
+Martin Gühmann, Stefanie Reuter, Ralf Mrowka, Diffdigester.uni-jena.de: Optimized resource for selection of restriction enzymes for plasmid identification. 
