@@ -146,19 +146,27 @@
 		<ol class="arabic simple">
 			<li><p>Paste or load from file your DNA sequences into the respective fields, and check the box if your sequence is circular. Sequence 1 may be for instance the sequence of the recipient plasmid, and sequence 3 that of the final plasmid including the insert. Sequence 2 is optional, and can be used that of the donor plasmid. The sequences can be raw or in fasta format and also be quite long since they are not uploaded to the server, but processed in the local browser. If more then one fasta sequence is in one text field then the first one is used and the others are ignored. The sequences should only contain the four canonical bases A, C, G, and T, case is ignored. Characters that are not letters in the English alphabet are ignored. Sequences for instance may come with a base pair index on the start of every new line. If a sequence contains another letter then A, C, G, or T, a warning is displayed below the “Submit and digest” button on submission. We recommend fixing this problem, since Preselector cannot know what to do with an ambiguous base such as N.</p></li>
 		</ol>
-		<a class="reference internal image-reference" href="docs/images/workflow_01.png"><img alt="preselection digest principle" src="docs/images/workflow_01.png" style="width: 800px;" /></a>
+		<a class="reference internal image-reference" href="docs/images/workflow_01.png"><img alt="The text boxes to select the sequences." src="docs/images/workflow_01.png" style="width: 800px;" /></a>
 		<ol class="arabic simple" start="2">
+			<li><p>The settings allow you to limit the enzymes that are shown. The option "Minimum number of fragments" restricts the enzymes shown that give at least the minimum number of fragments for each given sequence. This allows to exclude enzymes that do not cut the given sequences. The option "Maximum number of fragments" restricts the enzymes shown that give at least the maximum number of fragments for each given sequence. This allows to keep the number of fragments down as patterns with to many fragments are hard to recognize and distinguish. The options minimum and maximum fragment sizes restrict the results shown to enzymes that only give fragments whose sizes are with in the given values. The option "Minimum fragment size on gel" allows to cut of the gel at the given size in basepairs. Since the sizes are displayed logarithmically, there is otherwise a lot of space used. Note that this option hides bands that are smaller, if the "Minimum fragment size" is smaller. In the image below are the default values show for the options.</p></li>
+		</ol>
+		<a class="reference internal image-reference" href="docs/images/Settings.png"><img alt="The settings" src="docs/images/Settings.png" /></a>
+		<ol class="arabic simple" start="3">
+			<li><p>The results can be shown in different orders, which are shown in the image below. They are "By Unsimilarity", "By Similarity", "Alphabetical" and "Reverse alphabetical". Since a diff digestion should differentiate between two DNA species the "By Unsimilarity" option is useful to show the most unsimilar digestion pattern first. Though reversing the order might also be useful, or just ordering the results alphabetical by enzyme name.</p></li>
+		</ol>
+		<a class="reference internal image-reference" href="docs/images/SortOrder.png"><img alt="The settings" src="docs/images/SortOrder.png" /></a>
+		<ol class="arabic simple" start="4">
 			<li><p>Choose the restriction enzymes you want to use for searching. For instance if you want to exclude some enzymes, select them in the “Enzymes to use” list box and move them with the arrow over to the “Enzyme to exclude” list box. You can use the shift and CTRL (CMD on a Mac) keys to select more than one enzyme at once. Alternatively, you can provide a text file containing the enzymes (format in the right panel). The file should contain one enzyme per row, and unknown enzymes will be ignored. DiffDigester will warn about the first unknown enzyme, it encounters. You can ignore this warning safely. In addition, you can save the list of enzymes for reuse or documentation.</p></li>
 		</ol>
-		<a class="reference internal image-reference" href="docs/images/workflow_02.png"><img alt="preselection digest principle" src="docs/images/workflow_02.png" style="width: 800px;" /></a>
-		<ol class="arabic simple" start="3">
+		<a class="reference internal image-reference" href="docs/images/workflow_02.png"><img alt="Select the enzymes" src="docs/images/workflow_02.png" style="width: 800px;" /></a>
+		<ol class="arabic simple" start="5">
 			<li><p>Click “Submit and Digest” to run the analysis. DiffDigester checks your inputs for the correct format and issues a warning if any characters other than ‘ATGC’ are detected (arrow in the figure below).</p></li>
 		</ol>
-		<a class="reference internal image-reference" href="docs/images/workflow_03.png"><img alt="preselection digest principle" src="docs/images/workflow_03.png" style="width: 800px;" /></a>
-		<ol class="arabic simple" start="4">
+		<a class="reference internal image-reference" href="docs/images/workflow_03.png"><img alt="Submit your DiffDigest" src="docs/images/workflow_03.png" style="width: 800px;" /></a>
+		<ol class="arabic simple" start="6">
 			<li><p>Your results will be displayed as mock gels in cartoon style for each enzyme that produces cut according to the settings. Below is a gel for the enzyme TstI, the sequences used are from Example 1, which can be loaded from the Load example buttons. The first lane contains bands in black as DNA ladder, which is annotated the sizes in bp. The second lane contains the band produced from sequence 1 in red; the third lane bands from sequence 2 in green; and the fourth lane bands from sequence 3 in blue. Note that the minimum fragment size that was used for the gel in the image below was 50 bp, however this TstI also produces a fragment that is smaller then 50 bp and thus is not displayed. If a sequence is circular that means not cut then it is displayed as it were cut.</p></li>
 		</ol>
-		<a class="reference internal image-reference" href="docs/images/GelPic.png"><img alt="preselection digest principle" src="docs/images/GelPic.png" /></a>
+		<a class="reference internal image-reference" href="docs/images/GelPic.png"><img alt="An example of an output gel in cartoon style" src="docs/images/GelPic.png" /></a>
 
 		<h2>Examples</h2>
 		<div class="section" id="example-1-cloning-of-a-three-fragment-plasmid">
