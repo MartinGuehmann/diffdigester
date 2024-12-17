@@ -152,7 +152,7 @@
 		</ol>
 		<a class="reference internal image-reference" href="docs/images/Settings.png"><img alt="The settings" src="docs/images/Settings.png" /></a>
 		<ol class="arabic simple" start="3">
-			<li><p>The results can be shown in different orders, which are shown in the image below. They are "By Unsimilarity", "By Similarity", "Alphabetical" and "Reverse alphabetical". Since a diff digestion should differentiate between two DNA species the "By Unsimilarity" option is useful to show the most unsimilar digestion pattern first. Though reversing the order might also be useful, or just ordering the results alphabetical by enzyme name.</p></li>
+			<li><p>The results can be shown in different orders, which are shown in the image below. They are "By Dissimilarity", "By Similarity", "Alphabetical" and "Reverse alphabetical". Since a diff digestion should differentiate between two DNA species the "By Dissimilarity" option is useful to show the most dissimilar digestion pattern first. Though reversing the order might also be useful, or just ordering the results alphabetical by enzyme name.</p></li>
 		</ol>
 		<a class="reference internal image-reference" href="docs/images/SortOrder.png"><img alt="The settings" src="docs/images/SortOrder.png" /></a>
 		<ol class="arabic simple" start="4">
@@ -628,10 +628,10 @@
 				<tbody>
 					<tr>
 						<td style="vertical-align: top; border:none;">
-							<input id="patternUnsimilarity" value="0" name="SortOrder" type="radio" checked title="Sort the output by enzyme band pattern unsimilarity (most unsimular first)." />
+							<input id="patternDissimilarity" value="0" name="SortOrder" type="radio" checked title="Sort the output by enzyme band pattern dissimilarity (most dissimular first)." />
 						</td>
 						<td style="horizontal-align: top; border:none;">
-							<label for="patternUnsimilarity" title="Sort the output by enzyme band pattern unsimilarity (most unsimular first).">By Unsimilarity</label>
+							<label for="patternDissimilarity" title="Sort the output by enzyme band pattern dissimilarity (most dissimular first).">By Dissimilarity</label>
 						</td>
 					<tr/>
 					<tr>

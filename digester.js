@@ -781,7 +781,7 @@ function findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3) {
 			plotFragments(enzymeResults.fragments1, enzymeResults.fragments2, enzymeResults.fragments3, enzymeResults.enzyme);
 		}
 	}
-	else if(document.getElementById("patternUnsimilarity").checked)
+	else if(document.getElementById("patternDissimilarity").checked)
 	{
 		differentiatingEnzymes.sort(function(a, b){return b.distance-a.distance});
 		for(let i = 0; i < differentiatingEnzymes.length; i++)
