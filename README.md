@@ -6,4 +6,4 @@ Digestion is an method to check fast the identity of an DNA sequence in a plasmi
 
 If you find diffdigetser.uni-jena.de useful please cite:
 
-Martin Gühmann, Stefanie Reuter, Ralf Mrowka, Diffdigester.uni-jena.de: Optimized resource for selection of restriction enzymes for plasmid identification. 
+Martin Gühmann, Stefanie Reuter, Ralf Mrowka, Diffdigester.uni-jena.de: Optimized resource for selection of restriction enzymes for plasmid identification.
