@@ -97,11 +97,11 @@
 
 		<br>
 
-		You have to provide your two sequences in plain text. You can copy and paste the sequences into our web form.
-		In the case of a preselection digest e.g. the sequence of the Recipient Vector, optionally the donor insert, and the sequence of the Final Vector.
+		You have to provide two or three sequences in plain text of fasta format. It does not matter whether you sequence is in upper or lower case, it will converted to lower case for internal use. You can copy and paste the sequences into our web form or load them from a file.
+		You may compare the original recipient, the insert and the final plasmid.
 
 		An example of a plain text DNA sequence in 5-3 direction:
-		AGCTAGTCGATGCTATATTTAGCGATGCTAGTCGACTAGCTAAGGCTAGTGATCGAGCTGATCTATCGGATCTAGCGATCGATCGACTAC
+		AGCTAGTCGATGCTATATTTAGCGATGCTAGTCGACTAGCTAAGGCTAGTGATCGAGCTGATCTATCGGATCTAGCGATCGATCGACTAC<br>
 
 		<div class="h1">What do you get?</div>
 
@@ -152,7 +152,7 @@
 
 		<h2>Quick Guide</h2>
 		<ol class="arabic simple">
-			<li><p>Paste or load from file your DNA sequences into the respective fields, and check the box if your sequence is circular. Sequence 1 may be for instance the sequence of the recipient plasmid, and sequence 3 that of the final plasmid including the insert. Sequence 2 is optional, and can be used that of the donor plasmid. The sequences can be raw or in fasta format and also be quite long since they are not uploaded to the server, but processed in the local browser. If more then one fasta sequence is in one text field then the first one is used and the others are ignored. The sequences should only contain the four canonical bases A, C, G, and T, case is ignored. Characters that are not letters in the English alphabet are ignored. Sequences for instance may come with a base pair index on the start of every new line. If a sequence contains another letter then A, C, G, or T, a warning is displayed below the “Submit and digest” button on submission. We recommend fixing this problem, since Preselector cannot know what to do with an ambiguous base such as N.</p></li>
+			<li><p>Load your DNA sequences from file or paste them into the fields, and check the associated box if the sequence is circular. Sequence 1 may be for instance the sequence of the recipient plasmid, and sequence 3 that of the final plasmid including the insert. Sequence 2 is optional, and can be used that of the donor plasmid. The sequences can be raw or in fasta format and also be quite long since they are not uploaded to the server, but processed in the local browser. If more then one fasta sequence is in one text field then the first one is used and the others are ignored. The sequences should only contain the four canonical bases A, C, G, and T, case is ignored. Characters that are not letters in the English alphabet are ignored. Sequences for instance may come with a base pair index on the start of every new line. If a sequence contains another letter then A, C, G, or T, a warning is displayed below the “Submit and digest” button on submission. We recommend fixing this problem, since Preselector cannot know what to do with an ambiguous base such as N.</p></li>
 		</ol>
 		<a class="reference internal image-reference" href="docs/images/workflow_01.png"><img alt="The text boxes to select the sequences." src="docs/images/workflow_01.png" style="width: 800px;" /></a>
 		<ol class="arabic simple" start="2">
@@ -168,11 +168,11 @@
 		</ol>
 		<a class="reference internal image-reference" href="docs/images/workflow_02.png"><img alt="Select the enzymes" src="docs/images/workflow_02.png" style="width: 800px;" /></a>
 		<ol class="arabic simple" start="5">
-			<li><p>Click “Submit and Digest” to run the analysis. DiffDigester checks your inputs for the correct format and issues a warning if any characters other than ‘ATGC’ are detected (arrow in the figure below).</p></li>
+			<li><p>Click “Submit and Digest” to run the analysis. DiffDigester checks your inputs for the correct format and shows a warning if any characters in the English alphabet other than ‘ATGC’ are detected (arrow in the figure below). Characters that are not part of the English alphabet are ignored, such as basepair indices at the beginning of a line.</p></li>
 		</ol>
 		<a class="reference internal image-reference" href="docs/images/workflow_03.png"><img alt="Submit your DiffDigest" src="docs/images/workflow_03.png" style="width: 800px;" /></a>
 		<ol class="arabic simple" start="6">
-			<li><p>Your results will be displayed as mock gels in cartoon style for each enzyme that produces cut according to the settings. Below is a gel for the enzyme TstI, the sequences used are from Example 1, which can be loaded from the Load example buttons. The first lane contains bands in black as DNA ladder, which is annotated the sizes in bp. The second lane contains the band produced from sequence 1 in red; the third lane bands from sequence 2 in green; and the fourth lane bands from sequence 3 in blue. Note that the minimum fragment size that was used for the gel in the image below was 50 bp, however this TstI also produces a fragment that is smaller then 50 bp and thus is not displayed. If a sequence is circular that means not cut then it is displayed as it were cut.</p></li>
+			<li><p>Your results will be displayed as mock gels in cartoon style for each enzyme that produces fragments according to the settings. Below is a gel for the enzyme TstI, the sequences used are from Example 1, which can be loaded from the Load example buttons. The first lane contains a DNA ladder with black bands, which are annotated with their sizes in basepairs. The second lane contains the bands produced from sequence 1 in red; the third lane bands from sequence 2 in green; and the fourth lane bands from sequence 3 in blue. Note that the minimum fragment size that was used for the gel in the image below was 50 bp, however this TstI also produces a fragment that is smaller then 50 bp and thus is not displayed. If a sequence is circular that means not cut then it is displayed as it were cut.</p></li>
 		</ol>
 		<a class="reference internal image-reference" href="docs/images/GelPic.png"><img alt="An example of an output gel in cartoon style" src="docs/images/GelPic.png" /></a>
 
