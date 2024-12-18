@@ -409,6 +409,7 @@ function clearresults()
 	document.getElementById("fileWarning").innerHTML = "";
 
 	document.getElementById("NoFragmentMessage").setAttribute('style', "display: none;color:red;");
+	document.getElementById("NoSequence").setAttribute('style', "display: none;color:red;");
 	document.getElementById("ColorLegend").setAttribute('style', "display: none;");
 
 	let gelDrawings = document.getElementById("gelDrawings");
@@ -534,7 +535,14 @@ function myFunction()
 	seq1 = seqObj1.circSeq;
 	seq2 = seqObj2.circSeq;
 	seq3 = seqObj3.circSeq;
+	if(seqObj1.circSeq.length == 0 && seqObj2.circSeq == 0 && seqObj3.circSeq == 0)
+	{
+		document.getElementById("NoSequence").setAttribute('style', "display: block;color:red;");
+	}
+	else
+	{
 	let differentiatingEnzymes = findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3);
+}
 }
 
 function getMaxLength(fragments)
