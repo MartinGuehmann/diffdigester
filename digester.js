@@ -541,8 +541,8 @@ function myFunction()
 	}
 	else
 	{
-	let differentiatingEnzymes = findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3);
-}
+		let differentiatingEnzymes = findDifferentiatingEnzyme(seqObj1, seqObj2, seqObj3);
+	}
 }
 
 function getMaxLength(fragments)
@@ -825,21 +825,28 @@ function calcDistance3(fragments1, fragments2, fragments3)
 	let sum = 0;
 	let num = 0;
 
+	let diversities = [];
+
 	if(fragments1.length > 0)
 	{
-		sum += calcDistance(fragments1);
-		num++;
+		diversities.push(calcDistance(fragments1));
 	}
 
 	if(fragments2.length > 0)
 	{
-		sum += calcDistance(fragments2);
-		num++;
+		diversities.push(calcDistance(fragments2));
 	}
 
 	if(fragments3.length > 0)
 	{
-		sum += calcDistance(fragments3);
+		diversities.push(calcDistance(fragments3));
+	}
+
+	diversities.sort(function(a, b){return b.length-a.length});
+
+	for(let i = 0; i < diversities.length-1; i++)
+	{
+		sum += Math.sqrt(Math.abs(diversities[i] - diversities[i+1]));
 		num++;
 	}
 
@@ -857,16 +864,14 @@ function calcDistance(fragments)
 {
 	let sum = 0;
 	let num = 0;
-	// Calculate the pairwise distances
-	// The distance to itself is zero, but we don't need this
-	// Only the one triangle of the matrix is needed
-	for(let i = 0; i < fragments.length; ++i)
+
+	fragments.sort(function(a, b){return b.length-a.length});
+
+	for(let i = 0; i < fragments.length-1; i++)
 	{
-		for(let j = 0; j < i; ++j)
-		{
-			sum += Math.abs(Math.log(fragments[i].length) - Math.log(fragments[j].length));
-			num++;
-		}
+//		sum += Math.sqrt(Math.abs(Math.log(fragments[i].length) - Math.log(fragments[i+1].length)));
+		sum += Math.sqrt(Math.abs(fragments[i].length - fragments[i+1].length));
+		num++;
 	}
 
 	if(num > 0)
