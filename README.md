@@ -1,6 +1,6 @@
 # diffdigester.uni-jena.de
 
-Digesting a DNA sequence is a method to quickly identify it and to distinguish it from other DNA sequences. However, choosing fitting restriction enzymes by hand is not trivial and may lead to errors, potentially costing a lot of time and work. Diffdigester.uni-jena.de (https://diffdigester.uni-jena.de/) is a free online tool to find such restriction enzymes. It uses regular expressions to find recognition sites of restriction enzymes in the DNA sequences provided by the user. This tool compares the sets of restriction sites and reports the enzymes that give the most distinctive restriction patterns. Thus, diffdigester.uni-jena.de is a fast, reliable, and free-to-use tool to help researchers finding the best enzymes to verify their clones.
+DNA sequences such as plasmids can be quickly identified and distinguished from other DNA sequences by a restriction digest. However, choosing fitting restriction enzymes by hand is not trivial and may lead to errors, potentially costing a lot of time and work. Diffdigester.uni-jena.de (https://diffdigester.uni-jena.de/) is a free online tool to find such restriction enzymes. It uses regular expressions to find recognition sites of restriction enzymes in the DNA sequences provided by the user. It compares the sets of restriction sites and reports the enzymes that give the most distinctive restriction patterns. Thus, diffdigester.uni-jena.de is a fast, reliable, and free-to-use tool to help researchers finding the best enzymes to verify their clones.
 
 # Citing
 
