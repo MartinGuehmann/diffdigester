@@ -146,7 +146,7 @@
 		<ol class="arabic simple">
 			<li><p>Load your DNA sequences from a file or paste them into the fields, and check the associated box if the sequence is circular. As an example, sequence 1 may be the sequence of the recipient plasmid, sequence 2 of the recipient plasmid, and sequence 3 of the final plasmid with the insert if the cloning strategy is designed so that all three could be picked as clone. The sequences can be raw or in fasta format and also be quite long since they are not uploaded to the server, but processed in the local browser. If more then one fasta sequence is in one text field, the first one is used and the others are ignored. The sequences should only contain the four canonical bases A, C, G, and T, case is ignored. Characters that are not letters in the English alphabet are ignored. Sequences for instance may come with a base pair index on the start of every new line. If a sequence contains another letter then A, C, G, or T, a warning is displayed below the “Submit and digest” button on submission. We recommend fixing this problem, since DiffDigester cannot know what to do with an ambiguous base such as N.</p></li>
 		</ol>
-		<a class="reference internal image-reference" href="docs/images/workflow_01.png"><img alt="The text boxes to select the sequences." src="docs/images/workflow_01.png" style="width: 800px;" /></a>
+		<a class="reference internal image-reference" href="docs/images/SequenceTextBoxes.png"><img alt="The text boxes to select the sequences." src="docs/images/SequenceTextBoxes.png" /></a>
 		<ol class="arabic simple" start="2">
 			<li><p>The settings allow you to limit the enzymes that are shown. The option "Minimum number of fragments" only shows enzymes that give at least the minimum number of fragments for each given sequence. This allows to exclude enzymes that do not cut any of the given sequences. The option "Maximum number of fragments" shows only enzymes that give at most the maximum number of fragments for each sequence. This allows to keep the number of fragments down as patterns with to many fragments are hard to recognize and distinguish. The options minimum and maximum fragment sizes restrict the results shown to enzymes that only give fragments whose sizes are within the given values. The option "Minimum fragment size on gel" allows to cut the gel at the given size in basepairs. Since the sizes are displayed logarithmically, there is otherwise a lot of empty space shown. Note that this option hides bands that are smaller, if the "Minimum fragment size" is smaller. In the image below are the default values show for the options.</p></li>
 		</ol>
@@ -208,7 +208,7 @@
 					<div class="line"><br /></div>
 				</div>
 			</div>
-			</div>
+		</div>
 
 		<div class="section" id="example-2">
 			<h3>Example 2: Replacing a fluorophore gene by another fluorophore gene amplified by PCR.</h3>
