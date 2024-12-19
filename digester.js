@@ -1,4 +1,4 @@
-// Copyright by Martin and Ralf Mrowka (C) 2021,  all rights reserved
+// Copyright by Martin, Stefanie Reuter, and Ralf Mrowka (C) 2024,  all rights reserved
 
 var enzymeArray = [];
 
