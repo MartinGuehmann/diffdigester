@@ -81,13 +81,10 @@
 		ligate it into a previously opened Recipient Vector. The DNA fragments are separated on an agarose gel.
 		However, restriction enzymes may digest incompletely, leaving not only backbone and insert, but also linearized DNA molecules in the reaction.
 		A linearized plasmid of 10000 bp can be easily separated from a 1000 bp cutout fragment but is difficult to separate from a 9000 bp 
-		backbone fragment. Therefore, even after gel isolation linearized fragments may be left, and used in the ligation. 
-		A single fragment is more likely to be ligated with itself, than two are ligated together. This leads to a high background.
+		backbone fragment. The problem is even worse if the cut out fragment is just a few basepairs from a multiple cloning site. Therefore, even after gel isolation linearized fragments may be left, and used in the ligation.
+		A single fragment may be ligated with itself, than two are ligated together. But also cloning strategies where the overhangs are compatible for both orientations orientations including blunt end cloning require checking the identity of the picked clones.
 
-		The background can be substantially reduced by a test digest. Here another enzyme is used that does not cut the Final Vector after
-		ligation, but cuts the Recipient Vector. This preselection enzyme cuts after ligation all original Recipient Vectors that have been religated. 
-		The challenge here is finding a preselection enzyme, which is in mathematical terms a combinatorial problem. An easy way to find such enzymes is 
-		provided by diffdigester.uni-jena.de.
+		The clones can be identified by their restriction patterns in a text digest, easily. The challenge here is finding the right enzymes. An easy way to find such enzymes is provided by diffdigester.uni-jena.de.
 
 		<figure >
 			<img src="preselector_beschriftet6.png" alt="Flow Chart" style="width: 70%">
