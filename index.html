@@ -78,16 +78,16 @@
 		<div class="h1">Introduction</div>
 
 		In molecular cloning, restriction enzymes are used to cut out a fragment of DNA from a Donor Vector to
-		ligate it then into a previously opened Recipient Vector. The DNA fragments are separated on an agarose gel.
+		ligate it into a previously opened Recipient Vector. The DNA fragments are separated on an agarose gel.
 		However, restriction enzymes may digest incompletely, leaving not only backbone and insert, but also linearized DNA molecules in the reaction.
 		A linearized plasmid of 10000 bp can be easily separated from a 1000 bp cutout fragment but is difficult to separate from a 9000 bp 
 		backbone fragment. Therefore, even after gel isolation linearized fragments may be left, and used in the ligation. 
 		A single fragment is more likely to be ligated with itself, than two are ligated together. This leads to a high background.
 
-		The background can be substantially reduced by a preselection digest. Here another enzyme is used that does not cut the Final Vector after 
+		The background can be substantially reduced by a test digest. Here another enzyme is used that does not cut the Final Vector after
 		ligation, but cuts the Recipient Vector. This preselection enzyme cuts after ligation all original Recipient Vectors that have been religated. 
 		The challenge here is finding a preselection enzyme, which is in mathematical terms a combinatorial problem. An easy way to find such enzymes is 
-		provided by preselector.uni-jena.de.
+		provided by diffdigester.uni-jena.de.
 
 		<figure >
 			<img src="preselector_beschriftet6.png" alt="Flow Chart" style="width: 70%">
@@ -97,7 +97,7 @@
 
 		<br>
 
-		You have to provide two or three sequences in plain text of fasta format. It does not matter whether you sequence is in upper or lower case, it will converted to lower case for internal use. You can copy and paste the sequences into our web form or load them from a file.
+		You have to provide two or three sequences in plain text of fasta format. It does not matter whether you sequence is in upper or lower case, it will be converted to lower case for internal use. You can copy and paste the sequences into the web form or load them from a file.
 		You may compare the original recipient, the insert and the final plasmid.
 
 		An example of a plain text DNA sequence in 5-3 direction:
@@ -105,17 +105,12 @@
 
 		<div class="h1">What do you get?</div>
 
-		You enter two or three DNA sequences, indicate whether they are linear or circular.
-		And you get for each sequence, a list of cutting and another list of all non-cutting enzymes. 
-		It also displays the enzymes that cut the first but not the third sequence, and the enzymes that 
-		cut the second but not the third sequence. This way you can select your enzymes for your  
-		preselection, i.e. enzymes that cut in the recipient but not in the final plasmid. In addition you get 
-		a list of all non-cutting enzymes for each sequence. 
+		You enter two or three DNA sequences, and indicate whether they are linear or circular. You get a gel with the restriction band patterns for each restriction enzyme that cuts your DNA sequences according to the selected settings. If you order "By dissimilarity", which is the default, the first enzymes will be those with most distinguishable patterns so that you can pick the best enzyme for your test digest to verify your clones.
 
 		<div class="h1">How does it work?</div>
 
-		The sequences you provide are processed by a JavaScript program. No sequence is uploaded to the server. All sequences remain in the browser.
-		The JavaScript program uses regular expressions to search for the recognition sequences of restriction enzymes from the Rebase database.
+		The sequences you provide are processed with JavaScript. No sequence is uploaded to the server. All sequences remain in your browser.
+		The JavaScript program uses regular expressions to search for the recognition sequences of restriction enzymes from the Rebase database. The resulting digest patterns differ by the length of the DNA fragments, which is a one dimensional value and thus we score the patterns with the Shortest Path Root Measure and sort them afterwards.
 
 		<div class="h1">Disclaimer</div>
 
@@ -152,7 +147,7 @@
 
 		<h2>Quick Guide</h2>
 		<ol class="arabic simple">
-			<li><p>Load your DNA sequences from file or paste them into the fields, and check the associated box if the sequence is circular. Sequence 1 may be for instance the sequence of the recipient plasmid, and sequence 3 that of the final plasmid including the insert. Sequence 2 is optional, and can be used that of the donor plasmid. The sequences can be raw or in fasta format and also be quite long since they are not uploaded to the server, but processed in the local browser. If more then one fasta sequence is in one text field then the first one is used and the others are ignored. The sequences should only contain the four canonical bases A, C, G, and T, case is ignored. Characters that are not letters in the English alphabet are ignored. Sequences for instance may come with a base pair index on the start of every new line. If a sequence contains another letter then A, C, G, or T, a warning is displayed below the “Submit and digest” button on submission. We recommend fixing this problem, since Preselector cannot know what to do with an ambiguous base such as N.</p></li>
+			<li><p>Load your DNA sequences from a file or paste them into the fields, and check the associated box if the sequence is circular. Sequence 1 may be for instance the sequence of the recipient plasmid, and sequence 3 that of the final plasmid including the insert. Sequence 2 is optional, and can be used that of the donor plasmid. The sequences can be raw or in fasta format and also be quite long since they are not uploaded to the server, but processed in the local browser. If more then one fasta sequence is in one text field then the first one is used and the others are ignored. The sequences should only contain the four canonical bases A, C, G, and T, case is ignored. Characters that are not letters in the English alphabet are ignored. Sequences for instance may come with a base pair index on the start of every new line. If a sequence contains another letter then A, C, G, or T, a warning is displayed below the “Submit and digest” button on submission. We recommend fixing this problem, since DiffDigester cannot know what to do with an ambiguous base such as N.</p></li>
 		</ol>
 		<a class="reference internal image-reference" href="docs/images/workflow_01.png"><img alt="The text boxes to select the sequences." src="docs/images/workflow_01.png" style="width: 800px;" /></a>
 		<ol class="arabic simple" start="2">
