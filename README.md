@@ -6,4 +6,5 @@ DNA sequences such as plasmids can be quickly identified and distinguished from 
 
 If you find diffdigetser.uni-jena.de useful please cite:
 
-Martin Gühmann, Stefanie Reuter, Ralf Mrowka, Diffdigester.uni-jena.de: Optimized resource for selection of restriction enzymes for plasmid identification.
+Martin Gühmann, Stefanie Reuter, Ralf Mrowka, Diffdigester.uni-jena.de: A Tool for optimized selection of restriction enzymes for plasmid identification in cloning procedures
+
