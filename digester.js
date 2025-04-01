@@ -912,8 +912,8 @@ function getCutPositions(enzyme, sequence)
 
 	for (let i = 0; i < enzyme.regexfw.length; i++)
 	{
-		let matchIndicesFor = Array.from(sequence.matchAll(enzyme.regexfw[i])).map(x => x.index + enzyme.cutPosFw[i]);
-		let matchIndicesRev = Array.from(sequence.matchAll(enzyme.regexrv[i])).map(x => x.index + enzyme.cutPosRv[i]);
+		let matchIndicesFor = Array.from(sequence.matchAll(new RegExp(enzyme.regexfw[i], "ig"))).map(x => x.index + enzyme.cutPosFw[i]);
+		let matchIndicesRev = Array.from(sequence.matchAll(new RegExp(enzyme.regexrv[i], "ig"))).map(x => x.index + enzyme.cutPosRv[i]);
 
 		matchIndices = matchIndices.concat(matchIndicesFor);
 		matchIndices = matchIndices.concat(matchIndicesRev);
