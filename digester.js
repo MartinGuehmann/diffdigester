@@ -489,9 +489,9 @@ function getSequence(seqID){
 //	console.log("Test:", seqObject);
 
 	// Should probably go in the final version, that isn't that clean anyway.
-	if(document.getElementById("circular" + seqID).checked == true){
-		seq=seq+seq.substr(0, 30) //find matches also for the circular case
-	}
+//	if(document.getElementById("circular" + seqID).checked == true){
+//		seq=seq+seq.substr(0, 30) //find matches also for the circular case
+//	}
 
 	seqObject.circSeq = seq;
 
@@ -869,7 +869,6 @@ function calcDistance(fragments)
 
 	for(let i = 0; i < fragments.length-1; i++)
 	{
-//		sum += Math.sqrt(Math.abs(Math.log(fragments[i].length) - Math.log(fragments[i+1].length)));
 		sum += Math.sqrt(Math.abs(fragments[i].length - fragments[i+1].length));
 		num++;
 	}
@@ -904,17 +903,6 @@ function noneSmaller(fragments, minValue)
 	}
 
 	return true;
-}
-
-function isDifferentiable(fragments1, fragments2, fragments3) {
-	// Check for clear differences, e.g., number of fragments or unique fragment sizes
-	if (fragments1.length !== fragments2.length) return true;
-	for (let i = 0; i < fragments1.length; i++) {
-		if (Math.abs(fragments1[i]/fragments2[i]) > 1.2) { // 20% difference , Customize this threshold
-			return true;
-		}
-	}
-	return false;
 }
 
 function getCutPositions(enzyme, sequence)
