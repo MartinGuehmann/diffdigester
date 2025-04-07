@@ -488,11 +488,6 @@ function getSequence(seqID){
 	seqObject.seq = seq;
 //	console.log("Test:", seqObject);
 
-	// Should probably go in the final version, that isn't that clean anyway.
-//	if(document.getElementById("circular" + seqID).checked == true){
-//		seq=seq+seq.substr(0, 30) //find matches also for the circular case
-//	}
-
 	seqObject.circSeq = seq;
 
 	return seqObject;
