@@ -968,7 +968,7 @@ function generateFragments(enzyme, seqObj) {
 				}
 
 				start = matchIndicesEndStart[matchIndicesEndStart.length-1];
-				if(endStart.length < start)
+				if(start < endStart.length)
 				{
 					fragments.push(endStart.slice(start));
 				}
@@ -997,7 +997,7 @@ function generateFragments(enzyme, seqObj) {
 		if(!seqObj.isCircular)
 		{
 			let start = matchIndices[matchIndices.length-1];
-			if(seqObj.seq.length < start)
+			if(start < seqObj.seq.length)
 			{
 				fragments.push(seqObj.seq.slice(start));
 			}
@@ -1015,11 +1015,12 @@ function generateFragments(enzyme, seqObj) {
 
 			if (matchIndicesRotated.length > 0)
 			{
+				let lastFragment = "";
 				let start = 0;
 				let end   = matchIndicesRotated[0];
 				if(end > 0)
 				{
-					fragments.push(rotated.slice(start, end));
+					lastFragment += rotated.slice(start, end);
 				}
 
 				for (let i = 0; i < matchIndicesRotated.length-1; i++)
@@ -1030,9 +1031,14 @@ function generateFragments(enzyme, seqObj) {
 				}
 
 				start = matchIndicesRotated[matchIndicesRotated.length-1];
-				if(rotated.length < start)
+				if(start < rotated.length)
 				{
-					fragments.push(rotated.slice(start));
+					lastFragment += rotated.slice(start);
+				}
+
+				if(lastFragment.length > 0)
+				{
+					fragments.push(lastFragment);
 				}
 			}
 			else
